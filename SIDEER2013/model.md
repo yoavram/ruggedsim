@@ -39,3 +39,4 @@ Therefore
 $$
 E[T] \approx \frac{s}{N\mu^2(2-s)}
 $$
+This is an increasing function of *s* (for $0<s<1$) and a decreasing function of *\mu*.
