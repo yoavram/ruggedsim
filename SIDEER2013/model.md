@@ -39,4 +39,4 @@ Therefore
 $$
 E[T] \approx \frac{s}{N\mu^2(2-s)}
 $$
-This is an increasing function of *s* (for $0<s<1$) and a decreasing function of *\mu*.
+This is an increasing function of *s* ($\frac{dE[T]}{ds}=\frac{2}{N\mu^2 (s-2)^2}>0$) and a decreasing function of *\mu* and *N* ($\frac{d E[T] }{d \mu} = \frac{2s}{N(s-2)u^3} < 0, \frac{dE[T]}{dN}=\frac{s}{N^2 \mu^2 (s-2)} < 0$).
