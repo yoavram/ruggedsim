@@ -14,7 +14,7 @@ The individual fitness landscape has two peaks and a valley between them, and th
 
 Forward and backward mutation rates in both loci are equal to $\mu$ and there is no recombination.
 
-### Waiting time
+### Waiting time for double mutant
 Denote the population size as *N* and assume that $\frac{s}{\mu} < N << (\frac{s}{\mu})^2$ so that drift due to small population size is unlikely and production of *AB* is not too common. For example, if $\mu=10^{-6}$ and $s=10^{-2}$ then $10^4 < N << 10^8$.
 
 In the absence of *AB*, the frequencies of *Ab* and *aB* should approach the mutation-selection balance frequency $p=\frac{\mu}{s}$ and the probability that a random new individual is a *AB* individuals is approximated by $q_n$. The condition on *N* guarantees that $Nq_n$ is very small. Therefore the probability that an *AB* individual would appear in a population without *AB* , $1-(1-q_n)^N$, can be approximated by $Nq_n$, using the Binomial series expansion:
@@ -39,4 +39,4 @@ Therefore
 $$
 E[T] \approx \frac{s}{N\mu^2(2-s)}
 $$
-This is an increasing function of *s* ($\frac{dE[T]}{ds}=\frac{2}{N\mu^2 (s-2)^2}>0$) and a decreasing function of *\mu* and *N* ($\frac{d E[T] }{d \mu} = \frac{2s}{N(s-2)u^3} < 0, \frac{dE[T]}{dN}=\frac{s}{N^2 \mu^2 (s-2)} < 0$).
+This is an increasing function of *s* ($\frac{dE[T]}{ds}=\frac{2}{N\mu^2 (s-2)^2}>0$) and a decreasing function of $\mu$ and *N* ($\frac{d E[T] }{d \mu} = \frac{2s}{N(s-2)u^3} < 0, \frac{dE[T]}{dN}=\frac{s}{N^2 \mu^2 (s-2)} < 0$).
