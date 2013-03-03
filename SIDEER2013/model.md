@@ -32,9 +32,10 @@ We therefore need to find $q_n$.
 The frequency of *ab* at equilibrium is $1-2p$ and that of *Ab* and *aB* is *p* each. The transition from each of these genotypes to *ab* due to mutation is $(1-2p)\mu^2$ and $2p\mu(1-\mu)(1-s)$. Together these transition sum up to $q_n$:
 $$
 q_n = (1-2p)\mu^2 + 2p\mu(1-\mu)(1-s) = 
-\frac{\mu^2}{s}(2+2s\mu-s-4\mu)
+\frac{\mu^2}{s}(2+2s\mu-s-4\mu) = 
+\frac{\mu^2}{s}(2-s) + O(\mu^3) = 
 $$
 Therefore 
 $$
-E[T] \approx \frac{s}{N\mu^2(2+2s\mu-s-4\mu)}
+E[T] \approx \frac{s}{N\mu^2(2-s)}
 $$
