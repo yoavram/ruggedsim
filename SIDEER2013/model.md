@@ -40,3 +40,10 @@ $$
 E[T] \approx \frac{s}{N\mu^2(2-s)}
 $$
 This is an increasing function of *s* ($\frac{dE[T]}{ds}=\frac{2}{N\mu^2 (s-2)^2}>0$) and a decreasing function of $\mu$ and *N* ($\frac{d E[T] }{d \mu} = \frac{2s}{N(s-2)u^3} < 0, \frac{dE[T]}{dN}=\frac{s}{N^2 \mu^2 (s-2)} < 0$).
+
+Rewriting $q_n$ with two mutation rates, where $\mu_0$ and $\mu_1$ are the mutation rates of the wild type and the single mutants ($p=\mu_0/s$) and assuming $1 >> \mu_1 \ge \mu_0 $:
+$$
+q_n = (1-2p)\mu_0^2 + 2p\mu_1(1-\mu_1)(1-s) = 
+(1-2\mu_0/s)\mu_0^2 + 2\mu_0 \mu_1/s(1-\mu_1)(1-s) = 
+\mu_0^2 + 2\mu_0 \mu_1(1-s)/s + O(\mu_1^3) 
+$$
