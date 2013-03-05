@@ -11,14 +11,12 @@ There are two haploid loci with alleles *a/A* and *b/B* as well as infinitely ot
 1. The single mutants *Ab* and *aB* have a lower fitness *1-s* 
 1. The double mutant *AB* has a higher fitness *1+sH*
 
-Forward mutation rates in both loci are equal to $\mu$, the genomic mutation rate is *U* and there is no recombination. There are also no back mutations, so we assume that individuals that acquired deleterious mutations in loci other that *A/a* and *B/b* are evolutionary dead ends and will not contribute to the adaptation process. Therefore there are three ways to shift from the lower peak to the higher peak - directly, by two mutations in a single generations, and in two steps via *Ab* or *aB*.
+Forward mutation rates in both loci are equal to $\mu_k$ and the genomic mutation rate is *U_k*, where *k* denotes the genotype. Denote by *U* and $\mu$ the basal rates without stress-induction. There is no recombination. There are also no back mutations, so we assume that individuals that acquired deleterious mutations in loci other that *A/a* and *B/b* are evolutionary dead ends and will not contribute to the adaptation process. Therefore there are three ways to shift from the lower peak to the higher peak - directly, by two mutations in a single generations, and in two steps via *Ab* or *aB*.
 
 ### Waiting time for double mutant
-In the absence of *AB*, the fractions $f_0$ and $f_1$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_1=\frac{\mu}{s}$ and $f_0=1-U/s$. Transition from these genotypes to *ab* due to mutation is $(1-2p)\mu^2$ and $2p\mu(1-s)$. In addition, mutation Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$:
+In the absence of *AB*, the fractions $f_0$ and $f_1$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_1=\mu/s$ and $f_0=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_0 e^{-U_0} \mu_0^2$ and $2f_1 (1-s)e^{-U_1}\mu_1$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$:
 $$
-q_n = (1-2p)\mu^2 + 2p\mu(1-\mu)(1-s) = 
-\frac{\mu^2}{s}(2+2s\mu-s-4\mu) = 
-\frac{\mu^2}{s}(2-s) + O(\mu^3) = 
+q_n = (1-\frac{U}{s})e^{-U_0}\mu_0^2 + 2 \frac{\mu}{s} e^{-U_1}(1-s)\mu_1  
 $$
 
 Denote the population size as *N* and assume that $\frac{s}{\mu} < N << (\frac{s}{\mu})^2$ so that drift due to small population size is unlikely and production of *AB* is not too common. For example, if $\mu=10^{-6}$ and $s=10^{-2}$ then $10^4 < N << 10^8$.
