@@ -43,3 +43,5 @@ $$
 \frac{d q_n}{d \tau} = 2\frac{\mu^2}{s}e^{-U\tau}(1-\tau U)
 $$
 Therefore the optimal mutation rate increase for decreasing the waiting time for the appearance of the double mutant is $\tau=\frac{1}{U}$ and while $\tau U< 1$, increasing $\tau$ would decrease the waiting time.
+
+## References
