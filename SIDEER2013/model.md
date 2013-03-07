@@ -15,9 +15,9 @@ Mutation rates in both loci are equal to $\mu_k$ and the genomic mutation rate i
 
 ### Probability of appearance
 
-In the absence of *AB*, the fractions $f_0$ and $f_1$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_1=\mu/s$ and $f_0=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_0 e^{-U_0} \mu_0^2$ and $2f_1 (1-s)e^{-U_1}\mu_1$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$:
+In the absence of *AB*, the fractions $f_{ab}$ and $f_{aB/Ab}$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_{aB}=f_{Ab}=\mu/s$ and $f_ab=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_{ab} e^{-U_{ab}} \mu_{ab}^2$ and $2f_{Ab} (1-s)e^{-U_{Ab}}\mu_{Ab}$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$, assuming $U_{Ab}=U_{aB}, \mu_{Ab}=\mu_{aB}$:
 $$
-q_n = (1-\frac{U}{s})e^{-U_0}\mu_0^2 + 2 \frac{\mu}{s} e^{-U_1}\mu_1
+q_n = (1-\frac{U}{s})e^{-U_{ab}}\mu_{ab}^2 + 2 \frac{\mu}{s} e^{-U_{Ab}}\mu_{Ab}
 $$
 
 Denote the population size as *N* and assume that $\frac{s}{\mu} < N << (\frac{s}{\mu})^2$ so that drift due to small population size is unlikely and production of *AB* is not too common. For example, if $\mu=10^{-6}$ and $s=10^{-2}$ then $10^4 < N << 10^8$.
@@ -37,7 +37,7 @@ $$
 
 We start with the case in which hypermutation is induced in individuals who are below **both** the fitness peaks, that is, with fitness < 1.
 
-Denote $\mu_0 = \mu, U_0 = U$ and $\mu_1= \tau \mu$ and $U_1 = \tau U$, the probability of a appearance of a double mutant is:
+Denote $\mu_{ab} = \mu, U_{ab} = U$ and $\mu_{Ab}= \tau \mu$ and $U_{Ab} = \tau U$, the probability of a appearance of a double mutant is:
 $$
 q_n = (1-\frac{U}{s})e^{-U}\mu^2 + 2 \frac{\mu}{s} e^{-\tau U}\tau \mu = \\\\
 \frac{\mu^2}{s}e^{-U}(2 \tau e^{-U(\tau-1)} + s - U)
@@ -61,9 +61,10 @@ $$
 $$
 Here, $\alpha$ is just the relative fitness of the double mutant divided by the population mean fitness at the time of its appearance:
 $$
-\alpha = \frac{ (1+sH) e^{-U_2} }{ \bar{\omega} }
+\alpha = \frac{ (1+sH) e^{-U_{AB}} }{ \bar{\omega} } \\\\
+\bar{\omega} = ?
 $$
-
+Since we are interested in the extinction probability, we are dealing with a very low frrequency of *AB* and therefore it doesn't contribute much to the mean fitness.
 
 
 ## References
