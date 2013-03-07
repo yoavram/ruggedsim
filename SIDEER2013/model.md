@@ -13,7 +13,7 @@ Mutation rates in both loci are equal to $\mu_k$ and the genomic mutation rate i
 
 ## Waiting time for double mutant
 
-### Probability of appearance of a double mutant
+### Probability of appearance
 
 In the absence of *AB*, the fractions $f_0$ and $f_1$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_1=\mu/s$ and $f_0=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_0 e^{-U_0} \mu_0^2$ and $2f_1 (1-s)e^{-U_1}\mu_1$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$:
 $$
@@ -48,5 +48,22 @@ $$
 \frac{d q_n}{d \tau} = 2\frac{\mu^2}{s}e^{-U\tau}(1-\tau U).
 $$
 Therefore the optimal mutation rate increase $\tau$ for decreasing the waiting time for the appearance of the double mutant $E[T_1]$ is $\tau=\frac{1}{U}$ and while $\tau < \frac{1}{U}$, increasing $\tau$ would decrease the waiting time.
+
+## Fixation time of the double mutant
+
+### Fixation probability
+
+Because the double mutant is at the global fitness peak (*H>0*), its fixation, if it doesn't go to extinction first, is a steady state and the population will converge toa new mutation-selection balance around the global fitness peak. Therefore, the fixation probability $\pi$ can be calculated as $\pi = 1-\epsilon$, where $\epsilon$ is the extinction probability.
+
+Following [@Eshel1981], and assuming that the number of progeny of the double mutant follows a Poisson distribution with a mean of $\alpha$, we get that
+$$
+\pi = 2\frac{\alpha-1}{\alpha} + o(\alpha-1)
+$$
+Here, $\alpha$ is just the relative fitness of the double mutant divided by the population mean fitness at the time of its appearance:
+$$
+\alpha = \frac{ (1+sH) e^{-U_2} }{ \bar{\omega} }
+$$
+
+
 
 ## References
