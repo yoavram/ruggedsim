@@ -16,8 +16,28 @@ Forward mutation rates in both loci are equal to $\mu_k$ and the genomic mutatio
 ### Waiting time for double mutant
 In the absence of *AB*, the fractions $f_0$ and $f_1$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_1=\mu/s$ and $f_0=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_0 e^{-U_0} \mu_0^2$ and $2f_1 (1-s)e^{-U_1}\mu_1$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$:
 $$
-q_n = (1-\frac{U}{s})e^{-U_0}\mu_0^2 + 2 \frac{\mu}{s} e^{-U_1}(1-s)\mu_1  
+q_n = (1-\frac{U}{s})e^{-U_0}\mu_0^2 + 2 \frac{\mu}{s} e^{-U_1}\mu_1 \approx \\\\ 
+\frac{1}{s}((s-U)(1-U_0)\mu_0^2+2\mu \mu_1(1-U_1)(1-s))
 $$
+Denote $\mu_k = \tau_k \mu$ and $U_k = \tau_k U$,
+$$
+q_n \approx \frac{\mu^2}{s}((s-U)(1-\tau_0 U)\tau_0^2 + 2\tau_1 (1-\tau_1 U)(1-s))
+$$
+Setting $\tau=\tau_0=\tau_1$:
+$$
+q_n \approx \frac{\tau\mu^2}{s}(1-\tau U)(\tau(s-U) + 2-2s)
+$$
+Differentiating by $\tau$:
+$$
+\frac{d q_n}{d \tau} \approx \frac{\mu^2}{s}( 2+3 \tau U(\tau U -2)+s(\tau U (4-3 \tau)-2))
+$$
+Now, setting $\tau = 1$ for a non-mutator strain,
+$$
+\frac{d q_n(\tau=1)}{d \tau} \approx \frac{\mu^2}{s}( 2+3 U(U -2)+s(U-2)) = \\\\
+\frac{\mu^2}{s}(2+(3U+s)(U-2)) \approx \\\\
+\frac{2 \mu^2}{s}(1-3U+s)
+$$
+Therefore, if $1-3U+s>0$ then increasing the mutation rates of wild-types and single mutants would increase the appearance rate of the adaptive double mutants.This condition can be formulated as $1+s>3U$ or as a simpler, narrower condition for low values of *s*, $U<\frac{1}{3}$ which is a very reasonable condition for bacteria and yeast.
 
 Denote the population size as *N* and assume that $\frac{s}{\mu} < N << (\frac{s}{\mu})^2$ so that drift due to small population size is unlikely and production of *AB* is not too common. For example, if $\mu=10^{-6}$ and $s=10^{-2}$ then $10^4 < N << 10^8$.
 
@@ -33,15 +53,11 @@ E[T] \approx 1/Nq_n
 $$
 Therefore 
 $$
-E[T] \approx \frac{s}{N\mu^2(2-s)}
+E[T] \approx \frac{s}{N\mu^2((s-U)(1-\tau_0 U)\tau_0^2 + 2\tau_1 (1-\tau_1 U)(1-s))}
 $$
-This is an increasing function of *s* ($\frac{dE[T]}{ds}=\frac{2}{N\mu^2 (s-2)^2}>0$) and a decreasing function of $\mu$ and *N* ($\frac{d E[T] }{d \mu} = \frac{2s}{N(s-2)u^3} < 0, \frac{dE[T]}{dN}=\frac{s}{N^2 \mu^2 (s-2)} < 0$).
-
-Rewriting $q_n$ with two mutation rates, where $\mu_0$ and $\mu_1$ are the mutation rates of the wild type and the single mutants ($p=\mu_0/s$) and assuming $1 >> \mu_1 \ge \mu_0 $:
+Or if we set $\tau=\tau_0=\tau_1$:
 $$
-q_n = (1-2p)\mu_0^2 + 2p\mu_1(1-\mu_1)(1-s) = 
-(1-2\mu_0/s)\mu_0^2 + 2\mu_0 \mu_1/s(1-\mu_1)(1-s) = 
-\mu_0^2 + 2\mu_0 \mu_1(1-s)/s + O(\mu_1^3) =
-\mu_0(\mu_0 + 2 \mu_1 \frac{1-s}{s}) + O(\mu_1^3) 
+E[T] \approx \frac{s}{N(1-\tau U)\tau\mu^2((s-U)\tau + 2 (1-s))} = \\\\
+\frac{s}{N(1-\tau U)\tau\mu^2(\tau s-\tau U + 2-2s)} = \\\\
+\frac{s}{N(1-\tau U)\tau\mu^2(2 + s(\tau-2) -\tau U)}
 $$
-Nowincreasing the mutation rates decreases the waiting time but the effect of the two rates is different in size:
