@@ -84,5 +84,17 @@ For the fixation probability to be >0 we need $\alpha>1$, so we need
 $$
 H > \frac{1-s}{s}(1-e^{-U})e^{(1-s\tau)U}
 $$
+Now, plugging this to the formula for the fixation probability:
+$$
+\pi \approx 2\frac{\frac{ 1+sH  }{ 1 + (1-e^{-U})(1-s)e^{(1-s \tau) U}}-1}{\frac{ 1+sH  }{ 1 + (1-e^{-U})(1-s)e^{(1-s \tau) U}}} = \\\\
+2\frac{ 1+sH - 1 - (1-e^{-U})(1-s)e^{(1-s \tau) U} }{ 1+sH } = \\\\
+2\frac{ sH - (1-e^{-U})(1-s)e^{(1-s \tau) U} }{ 1+sH }
+$$
+Differentiating this by $\tau$, we get
+$$
+\frac{d \pi}{d \tau} = \frac{2(1-s)s(e^U-1)Ue^{-s \tau U}}{1+s H}
+$$
+This is always positive, and therefore the fixation probability always increases with $\tau$.
+
 
 ## References
