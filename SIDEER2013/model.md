@@ -13,18 +13,8 @@ Mutation rates in both loci are equal to $\mu_k$ and the genomic mutation rate i
 
 Denote the population size as *N* and assume that $\frac{s}{\mu} < N << (\frac{s}{\mu})^2$ so that drift due to small population size is unlikely and production of *AB* is not too common. For example, if $\mu=10^{-6}$ and $s=10^{-2}$ then $10^4 < N << 10^8$.
 
-The condition on *N* guarantees that $Nq_n$ is very small. Therefore the probability that an *AB* individual would appear in a population without *AB* , $1-(1-q_n)^N$, can be approximated by $Nq_n$, using the Binomial series expansion:
-$$
-1-(1-q_n)^N = 1 - (1 + Nq_n + O(Nq_n^2)) = 
-Nq_n + O(Nq_n^2) \Rightarrow
-1-(1-q_n)^N \approx Nq_n
-$$
-The waiting time for the appearance of *AB* follows a geometric distribution with expectation:
-$$
-E[T] \approx 1/Nq_n
-$$
-
 ## Waiting time for double mutant
+
 In the absence of *AB*, the fractions $f_0$ and $f_1$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_1=\mu/s$ and $f_0=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_0 e^{-U_0} \mu_0^2$ and $2f_1 (1-s)e^{-U_1}\mu_1$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$:
 $$
 q_n = (1-\frac{U}{s})e^{-U_0}\mu_0^2 + 2 \frac{\mu}{s} e^{-U_1}\mu_1
@@ -43,5 +33,18 @@ $$
 \frac{d q_n}{d \tau} = 2\frac{\mu^2}{s}e^{-U\tau}(1-\tau U)
 $$
 Therefore the optimal mutation rate increase for decreasing the waiting time for the appearance of the double mutant is $\tau=\frac{1}{U}$ and while $\tau U< 1$, increasing $\tau$ would decrease the waiting time.
+
+### Waiting time via the appearance probability
+
+The condition on *N* guarantees that $Nq_n$ is very small. Therefore the probability that an *AB* individual would appear in a population without *AB* , $1-(1-q_n)^N$, can be approximated by $Nq_n$, using the Binomial series expansion:
+$$
+1-(1-q_n)^N = 1 - (1 + Nq_n + O(Nq_n^2)) = 
+Nq_n + O(Nq_n^2) \Rightarrow
+1-(1-q_n)^N \approx Nq_n
+$$
+The waiting time for the appearance of *AB* follows a geometric distribution with expectation:
+$$
+E[T] \approx 1/Nq_n
+$$
 
 ## References
