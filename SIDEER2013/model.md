@@ -1,4 +1,4 @@
-# Model
+# Adaptation with stress-induced mutation
 
 Following [@Hadany2003b].
 
