@@ -63,7 +63,7 @@ Here, $\alpha$ is just the relative fitness of the double mutant divided by the 
 $$
 \alpha = \frac{ (1+sH) e^{-U_{AB}} }{ \bar{\omega} } 
 $$
-Since we are interested in the extinction probability, we are dealing with a very low frrequency of *AB* and therefore it doesn't contribute much to the mean fitness. The population mean fitness is that of the mutation selection balance before the adaptation appeared. The fraction of individuals without deleterious mutations is $e^{-U}\approx 1-U$, but the fraction of individuals with *k* deleterious mtuations, including *Ab* and *aB*, is not simply $U^k e^{-U} /k!$, as shown in classical work [@Maruyama1966; @Gordo2005], because the mutation rate is higher in individuals with deleterious mutations. 
+Since we are interested in the extinction probability, we are dealing with a very low frrequency of *AB* and therefore it doesn't contribute much to the mean fitness. The population mean fitness is that of the mutation selection balance before the adaptation appeared. The fraction of individuals without deleterious mutations is $e^{-U}\approx 1-U$, but the fraction of individuals with *k* deleterious mtuations, including *Ab* and *aB*, is not simply $U^k e^{-U} /k!$, as shown in classical work [@Kimura1966; @Gordo2005], because the mutation rate is higher in individuals with deleterious mutations. 
 
 We bypass this issue by dividing the population first to mutation free individuals and individuals with one or more deleterious mutations. The fractions of these classes are $e^{-U/s}$ and $1-e^{-U/s}$. The number of additional deleterious mutations beyond the first is then Poisson distributed with a mean of $\tau U/s$:
 $$
