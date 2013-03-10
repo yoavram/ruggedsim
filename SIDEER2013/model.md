@@ -129,19 +129,22 @@ $$
 
 We plug that in the equation for $\alpha$, and assume that $U_{AB} = U$:
 $$
-\alpha = \frac{ (1+sH) e^{-U} }{ e^{-U/s} + (1-e^{-U/s})(1-s)e^{-\tau U}}
+\alpha = \frac{ (1+sH) e^{-U} }{ e^{-U/s} + (1-e^{-U/s})(1-s)e^{-\tau U}} = \\\\
+\frac{1+sH}{e^{U-U/s}+(1-e^{-U/s})(1-s)e^{U-\tau U}}
 $$
-
+Note that 
+$$
+e^{U-U/s}+(1-e^{-U/s})(1-s)e^{U-\tau U} = \\\\
+$$
 Now, subtituting $\alpha$ in the formula for the fixation probability:
 $$
-\pi \approx 2\frac{\frac{ (1+sH)e^{-U}  }{e^{-U/s}+(1-e^{-U/s})(1-s)e^{-\tau U}} -1}{\frac{1+sH)e^{-U}}{e^{-U/s}+(1-e^{-U/s})(1-s)e^{-\tau U}}} = \\\\
-2-2\frac{e^{-U(1/s-1)}+(1-e^{-U/s})(1-s)e^{-U(\tau-1)}}{1+sH}
+\pi \approx 
 $$
 
 Setting $\tau=1/U$, the optimal mutation rates increase found in the previous section, we get 
 $$
-\pi \approx 2\frac{ sH - (1-e^{-U})(1-s)e^{U-s} }{ 1+sH }
+\pi \approx
 $$
-For our test case of $U=0.003, s=0.01$ and choosing $H=10$, this is equal to 0.1765.
+For our test case 
 
 ## References
