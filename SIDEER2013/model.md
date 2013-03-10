@@ -87,7 +87,7 @@ $$
 \frac{1+s}{2U+s U^2 e^{1-U}+Ue^{1-U}} = \\\\
 \frac{1+s}{2U+O(U^2)}
 $$
-Note that this advantage of CM depends on two components: higher mutation rate in *ab* individuals, and greater genetic variation in the population at the mutation-selection balance which gives a higher frequency of single mutants *Ab* and *aB*.
+Note that this advantage of CM depends on two components: higher mutation rate in *ab* individuals (hence the dependence on *s*), and greater genetic variation in the population at the mutation-selection balance which gives a higher frequency of single mutants *Ab* and *aB* (hence the negative dependence on *U*).
 
 ## Fixation time of the double mutant
 
