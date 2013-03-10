@@ -16,7 +16,7 @@ Mutation rates in the focus loci are equal to $\mu_k$ and the genomic mutation r
 
 ### Probability of appearance
 
-In the absence of *AB*, the fractions $f_{ab}$ and $f_{aB/Ab}$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_{aB}=f_{Ab}=\mu/s$ and $f_ab=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_{ab} e^{-U_{ab}} \mu_{ab}^2$ and $2f_{Ab} (1-s)e^{-U_{Ab}}\mu_{Ab}$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$, assuming $U_{Ab}=U_{aB}, \mu_{Ab}=\mu_{aB}$:
+In the absence of *AB*, the fractions $f_{ab}$, $f_{Ab}$ and $f_{Ab}$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_{aB}=f_{Ab}=\mu/s$ and $f_ab=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_{ab} e^{-U_{ab}} \mu_{ab}^2$ and $2f_{Ab} (1-s)e^{-U_{Ab}}\mu_{Ab}$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$, assuming $U_{Ab}=U_{aB}, \mu_{Ab}=\mu_{aB}$:
 $$
 q_n = (1-\frac{U}{s})e^{-U_{ab}}\mu_{ab}^2 + 2 \frac{\mu}{s} e^{-U_{Ab}}\mu_{Ab}
 $$
