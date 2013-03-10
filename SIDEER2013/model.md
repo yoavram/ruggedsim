@@ -103,6 +103,18 @@ $$
 $$
 Since we are interested in the extinction probability, we are dealing with a very low frrequency of *AB* and therefore it doesn't contribute much to the mean fitness. The population mean fitness is that of the mutation selection balance before the adaptation appeared. 
 
+### Constant mutation rate
+
+In a constant mutation rate population, the mean fitness of the population at the mutation-selection balance is $e^{-\tau U}$ for a global mutation rate of $\tau U$ [@Kimura 1966].
+
+The fixation probability is therefore
+$$
+\pi \approx = 2\frac{\frac{ (1+sH) e^{-\tau U} }{ e^{-\tau U} } -1}{\frac{ (1+sH) e^{-\tau U} }{ e^{-\tau U} } } = \\\\
+2\frac{\frac{ sH }{1 + sH } } \approx \\\\
+2sH
+$$
+which is the classical result.
+
 ### Stress-induced mutation
 
 The fraction of individuals without deleterious mutations is $e^{-U}\approx 1-U$, but the fraction of individuals with *k* deleterious mtuations, including *Ab* and *aB*, is not simply $U^k e^{-U} /k!$, as shown in classical work [@Kimura1966; @Gordo2005], because the mutation rate is higher in individuals with deleterious mutations. 
