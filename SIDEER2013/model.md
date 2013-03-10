@@ -8,8 +8,9 @@ There are two haploid loci with alleles *a/A* and *b/B* as well as infinitely ot
 1. The relative fitness of *ab* is 1
 1. The single mutants *Ab* and *aB* have a lower fitness *1-s* 
 1. The double mutant *AB* has a higher fitness *1+sH*
+1. Mutations in other loci reduce the fitness in a multiplicative manner by *1-s*
 
-Mutation rates in both loci are equal to $\mu_k$ and the genomic mutation rate is $U_k$, where *k* denotes the genotype. Denote by *U* and $\mu$ the basal rates without stress-induction which are also the ones used before the environmental change. There is no recombination. There are also no back mutations, so we assume that individuals that acquired deleterious mutations in loci other that *A/a* and *B/b* are evolutionary dead ends and will not contribute to the adaptation process. Therefore there are three ways to shift from the lower peak to the higher peak - directly, by two mutations in a single generations, and in two steps via *Ab* or *aB*.
+Mutation rates in the focus loci are equal to $\mu_k$ and the genomic mutation rate is $U_k$, where *k* denotes the genotype. *U* and $\mu$ are the basal mutation rates used before the environmental change. There is no recombination. There are also no back mutations, so we assume that individuals that acquired deleterious mutations in loci other that *A/a* and *B/b* are evolutionary dead ends and will not contribute to the adaptation process. Therefore there are three ways to shift from the lower peak to the higher peak - directly, by two mutations in a single generations, and in two steps via *Ab* or *aB*.
 
 ## Waiting time for double mutant
 
