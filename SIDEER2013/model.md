@@ -16,7 +16,7 @@ Mutation rates in the focus loci are equal to $\mu_k$ and the genomic mutation r
 
 ### Probability of appearance
 
-In the absence of *AB*, the fractions $f_{ab}$, $f_{Ab}$ and $f_{Ab}$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_{aB}=f_{Ab}=\mu/s$ and $f_ab=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to *ab* due to mutation is $f_{ab} e^{-U_{ab}} \mu_{ab}^2$ and $2f_{Ab} (1-s)e^{-U_{Ab}}\mu_{Ab}$, where the $e^{-U_k}$ terms express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$, assuming $U_{Ab}=U_{aB}, \mu_{Ab}=\mu_{aB}$:
+In the absence of *AB*, the fractions $f_{ab}$, $f_{Ab}$ and $f_{Ab}$ of the wild type *ab* and the single mutants (*Ab* and *aB*) should approach the mutation-selection balance frequencies $f_{aB}=f_{Ab}=\mu/s$ and $f_ab=1-U/s$, assuming *s* is the selection coefficient of deleterious mutations. Transition from these genotypes to the double mutant *ab* due to mutation is $f_{ab} e^{-U_{ab}} \mu_{ab}^2$ and $2f_{Ab}e^{-U_{Ab}}\mu_{Ab}$, where the $e^{-U_k}$ terms are the Poisson probabilities that no deleterious mutations occured and express the load imposed by deleterious mutations. Together these transitions sum up to the probability that a new born individual is a double mutant $q_n$, assuming $U_{Ab}=U_{aB}, \mu_{Ab}=\mu_{aB}$:
 $$
 q_n = (1-\frac{U}{s})e^{-U_{ab}}\mu_{ab}^2 + 2 \frac{\mu}{s} e^{-U_{Ab}}\mu_{Ab}
 $$
@@ -36,7 +36,7 @@ $$
 
 ### Constant mutation rate
 
-We define $U_k=\tau U$ and $\mu_k=\tau \mu$ so that the mutation rate is constant.
+We define $\tau$ to be the multiplicate increase of the mutation rate by a mutator allele and denote $U_k=\tau U$ and $\mu_k=\tau \mu$ so that the mutation rate is constant:
 
 $$
 q_n = (1-\frac{\tau U}{s})e^{-\tau U}(\tau \mu)^2 + 2 \frac{\tau \mu}{s} e^{-\tau U}\tau \mu = \\\\
@@ -47,7 +47,7 @@ Deriving this with respect to $\tau$, we get
 $$
 \frac{d q_n}{d \tau} = e^{-\tau U} \frac{\tau \mu^2}{s} (\tau U (\tau U -(s+5))+2s +4)
 $$
-Approximating with $s+5 \approx 5$ and $2s+4\approx4$, we get
+Disregarding positive terms and approximating $s+5 \approx 5$ and $2s+4\approx4$, we get
 $$
 sign(\frac{d q_n}{d \tau} ) = sign(\tau U (\tau U -(s+5))+2s +4) \approx \\\\
 sign(\tau U (\tau U -5)+4) = \\\\
@@ -55,15 +55,15 @@ sign( (\tau U)^2 -5 \tau U + 4)
 $$
 The last expression is positive for $\tau <1/U$ and $\tau > 4/U$. The maximum of $q_n$ is attained in the first root of the derivative, where $\tau = 1/U$:
 $$
-\max{q_n} = e^{-1} \frac{\mu^2}{U^2 s}(1+s)
+\max{q_n} = \frac{\mu^2}{U^2 s}e^{-1}(1+s)
 $$
 For example, for $U = 0.003, \mu=10^{-7}, s=0.01$, the probability of apperance of a double mutant in a mutator population is roughly $q_n = 4.13 \cdot 10^{-8}$.
 
 ### Stress-induced mutation
 
-This is the case in which hypermutation is induced in individuals who are below **both** the fitness peaks, that is, with fitness $\le 1-s$.
+This is the case in which hypermutation is induced in individuals who are below **both** fitness peaks, that is, with fitness $\le 1-s$.
 
-Denote $\mu_{ab} = \mu, U_{ab} = U$ and $\mu_{Ab}= \tau \mu$ and $U_{Ab} = \tau U$, the probability of a appearance of a double mutant is:
+Denote $\mu_{ab} = \mu, U_{ab} = U$, $\mu_{Ab}= \tau \mu$ and $U_{Ab} = \tau U$, the probability of a appearance of a double mutant is:
 $$
 q_n = (1-\frac{U}{s})e^{-U}\mu^2 + 2 \frac{\mu}{s} e^{-\tau U}\tau \mu = \\\\
 \frac{\mu^2}{s}e^{-U}(2 \tau e^{-U(\tau-1)} + s - U)
@@ -73,12 +73,20 @@ Differentiating by $\tau$:
 $$
 \frac{d q_n}{d \tau} = 2\frac{\mu^2}{s}e^{-U\tau}(1-\tau U).
 $$
-Therefore the optimal mutation rate increase $\tau$ for decreasing the waiting time for the appearance of the double mutant $E[T_1]$ is $\tau=\frac{1}{U}$ which gives
+Therefore the optimal mutation rate increase $\tau$ for decreasing the waiting time for the appearance of the double mutant $E[T_1]$ is $\tau=1/U$ which gives
 $$
 \max{q_n} = \frac{\mu^2}{s}e^{-U}(\frac{2}{U} e^{-1+U} +s -U)
 $$
 
 To take the same example as before, setting $U = 0.003, \mu=10^{-7}, s=0.01$ we get that $q_n = 2.45 \cdot 10^{-10}$.
+
+Comparing the maximum appearance probability with constant mutation rate and stress-induced mutation rate,
+
+$$
+\frac{\frac{\mu^2}{U^2 s}e^{-1}(1+s)}{\frac{\mu^2}{s}e^{-U}(\frac{2}{U} e^{-1+U} +s -U)} = \\\\
+\frac{1+s}{2U+s U^2 e^{1-U}+Ue^{1-U} = \\\\
+\frac{1+s}{2U+O(U^2)
+$$
 
 ## Fixation time of the double mutant
 
