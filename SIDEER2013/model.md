@@ -132,13 +132,22 @@ $$
 \alpha = \frac{ (1+sH) e^{-U} }{ e^{-U/s} + (1-e^{-U/s})(1-s)e^{-\tau U}} = \\\\
 \frac{1+sH}{e^{U-U/s}+(1-e^{-U/s})(1-s)e^{U-\tau U}}
 $$
-Note that 
+Approximating the denominator using two terms of a Taylor expansion,
 $$
-e^{U-U/s}+(1-e^{-U/s})(1-s)e^{U-\tau U} = \\\\
+e^{U-U/s}+(1-e^{-U/s})(1-s)e^{U-\tau U} \approx \\\\
+1+U-U/s+U/s(1-s)(1+U-\tau U) = \\\\
+1+U-U/s+(U/s-U)(1+U-\tau U) = \\\\
+1+U-U/s+U/s-U+U^2/s-U^2-\tau U^2/s+\tau U^2 = \\\\
+1-(\tau-1)(U^2/s-U^2) <1
 $$
-Now, subtituting $\alpha$ in the formula for the fixation probability:
+
+because $ \tau \ge 1, \; 0 < s < 1/2 $.
+
+This means that $\alpha>1+sH$ for stress-induced mutation, which means that its fixaiton will be faster than that of a constitutive mutator. Subtituting $\alpha$ in the formula for the fixation probability:
 $$
-\pi \approx 
+\pi \approx \frac{\frac{1+sH}{1-(\tau -1 )(U^2/s-U^2)}-1}{\frac{1+sH}{1-(\tau -1 )(U^2/s-U^2)}} = \\\\
+\frac{1+sH-1+(\tau -1 )(U^2/s-U^2)}{1+sH} = \\\\
+1 - \frac{1-(\tau -1)(U^2/s-U^2)}{1+sH} = \\\\
 $$
 
 Setting $\tau=1/U$, the optimal mutation rates increase found in the previous section, we get 
