@@ -110,7 +110,7 @@ In a constant mutation rate population, the mean fitness of the population at th
 The fixation probability is therefore
 $$
 \pi \approx = 2\frac{\frac{ (1+sH) e^{-\tau U} }{ e^{-\tau U} } -1}{\frac{ (1+sH) e^{-\tau U} }{ e^{-\tau U} } } = \\\\
-2\frac{\frac{ sH }{1 + sH } } \approx \\\\
+2\frac{ sH }{1 + sH }  \approx \\\\
 2sH
 $$
 which is the classical result.
@@ -129,26 +129,14 @@ $$
 
 We plug that in the equation for $\alpha$, and assume that $U_{AB} = U$:
 $$
-\alpha = \frac{ (1+sH) e^{-U} }{ e^{-U} + (1-e^{-U})(1-s)e^{-s \tau U}} = \\\\
-\frac{ 1+sH  }{ 1 + (1-e^{-U})(1-s)e^{(1-s \tau) U}} = \\\\
-\frac{ 1+sH  }{ 1 + (1-e^{-U})(1-s)e^{(1-s \tau) U}}
+\alpha = \frac{ (1+sH) e^{-U} }{ e^{-U/s} + (1-e^{-U/s})(1-s)e^{-\tau U}}
 $$
 
-For the fixation probability to be >0 we need $\alpha>1$, so we need 
-$$
-H > \frac{1-s}{s}(1-e^{-U})e^{(1-s\tau)U}
-$$
 Now, subtituting $\alpha$ in the formula for the fixation probability:
 $$
-\pi \approx 2\frac{\frac{ 1+sH  }{ 1 + (1-e^{-U})(1-s)e^{(1-s \tau) U}}-1}{\frac{ 1+sH  }{ 1 + (1-e^{-U})(1-s)e^{(1-s \tau) U}}} = \\\\
-2\frac{ 1+sH - 1 - (1-e^{-U})(1-s)e^{(1-s \tau) U} }{ 1+sH } = \\\\
-2\frac{ sH - (1-e^{-U})(1-s)e^{(1-s \tau) U} }{ 1+sH }
+\pi \approx 2\frac{\frac{ (1+sH)e^{-U}  }{e^{-U/s}+(1-e^{-U/s})(1-s)e^{-\tau U}} -1}{\frac{1+sH)e^{-U}}{e^{-U/s}+(1-e^{-U/s})(1-s)e^{-\tau U}}} = \\\\
+2-2\frac{e^{-U(1/s-1)}+(1-e^{-U/s})(1-s)e^{-U(\tau-1)}}{1+sH}
 $$
-Differentiating this by $\tau$, we get
-$$
-\frac{d \pi}{d \tau} = \frac{2(1-s)s(e^U-1)Ue^{-s \tau U}}{1+s H}
-$$
-This is always positive (since $1>s>0, U>0$), and therefore the fixation probability always increases with $\tau$, although with diminishing returns, as $e^{-s\tau U}$ decreases when $\tau$ increases.
 
 Setting $\tau=1/U$, the optimal mutation rates increase found in the previous section, we get 
 $$
