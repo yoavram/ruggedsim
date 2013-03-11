@@ -1,3 +1,6 @@
+# TODO
+add competition between SIM and CM in the waiting time for appearance
+
 # Adaptation with stress-induced mutation
 
 Following [@Hadany2003b].
