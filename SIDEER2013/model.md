@@ -144,7 +144,7 @@ e^{U-U/s}+(1-e^{-U/s})(1-s)e^{U-\tau U} \approx \\\\
 1-(\tau-1)(U^2/s-U^2) <1
 $$
 
-because $ \tau \ge 1, \; 0 < s < 1/2 $.
+because $\tau \ge 1, 0 < s < 1/2$.
 
 This means that $\alpha>1+sH$ for stress-induced mutation, which means that its fixaiton will be faster than that of a constitutive mutator. Subtituting $\alpha$ in the formula for the fixation probability:
 $$
