@@ -150,12 +150,12 @@ This means that $\alpha>1+sH$ for stress-induced mutation, which means that its 
 $$
 \pi \approx \frac{\frac{1+sH}{1-(\tau -1 )(U^2/s-U^2)}-1}{\frac{1+sH}{1-(\tau -1 )(U^2/s-U^2)}} = \\\\
 \frac{1+sH-1+(\tau -1 )(U^2/s-U^2)}{1+sH} = \\\\
-1 - \frac{1-\frac{U^2}{s}(\tau -1)(1-s)}{1+sH} = \\\\
+1 - \frac{1-\frac{U^2}{s}(\tau -1)(1-s)}{1+sH}\\\\
 $$
 
 Setting $\tau=1/U$, the optimal mutation rates increase found in the previous section, we get 
 $$
-\pi \approx 1 - \frac{1-\frac{U}{s}(1-U)(1-s)}{1+sH} = \\\\
+\pi \approx 1 - \frac{1-\frac{U}{s}(1-U)(1-s)}{1+sH}\\\\
 $$
 For our test case of $s=0.01, H=2, U=0.003$ this gives $\pi \approx 0.31$
 
