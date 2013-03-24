@@ -103,45 +103,33 @@ def mutation(population, genomes, mutation_rates, num_loci, target_genome, nums,
 	# DEBUG END
 	mutations = np.round(events * prob_mu)
 	mutations = np.array([np.int(x) for x in mutations])
-	recombinations = events - mutations
 	events_cumsum = events.cumsum()
 	total_events = events_cumsum[-1]
 	loci = np.random.randint(0, num_loci, total_events)
 	loci_split = np.split(loci, events.cumsum())[:-1] # split by strain
-	loci_split = [np.split(x, mutations[i:i+1]) for i,x in enumerate(loci_split)] # split by mutation/recombination
 	new_counts = {}
 	new_genomes = {}
 
-	# 0 - mutation, 1 - recombination
 	for strain in range(population.shape[0]):
 		population[strain] = population[strain] - events[strain]
 		assert population[strain] >= 0  # ASSERT
 
-		for method in range(len(loci_split[strain])):
-			_loci = loci_split[strain][method]	
-			if len(_loci) == 0:
-				continue
-			if method == 0: # mutation
-				allele_change = np.random.binomial(1, 1 - beta, len(_loci))
-				new_alleles = (target_genome[_loci] + allele_change) % 2 
-			elif method == 1: # recombination
-				if rec_bar:
-					raise NotImplementedError("Recombination barriers not implemented")
-				else:
-					donors = np.random.multinomial(len(_loci), population/float(population.sum()))
-				donors = np.repeat(np.arange(donors.shape[0]), donors)
-				new_alleles = genomes[donors, _loci]
+		_loci = loci_split[strain]	
+		if len(_loci) == 0:
+			continue
+		allele_change = np.random.binomial(1, 1 - beta, len(_loci))
+		new_alleles = (target_genome[_loci] + allele_change) % 2 
 
-			for i, locus in enumerate(_loci):
-				new_allele = new_alleles[i]
-				key = (strain, locus, new_allele)
-				if key in new_counts:
-					new_counts[key] += 1
-				else:
-					new_genome = genomes[strain, :].copy()				
-					new_genome[locus] = new_allele
-					new_counts[key] = 1
-					new_genomes[key] = new_genome
+		for i, locus in enumerate(_loci):
+			new_allele = new_alleles[i]
+			key = (strain, locus, new_allele)
+			if key in new_counts:
+				new_counts[key] += 1
+			else:
+				new_genome = genomes[strain, :].copy()				
+				new_genome[locus] = new_allele
+				new_counts[key] = 1
+				new_genomes[key] = new_genome
 
 	if len(new_genomes) > 0:
 		for key, new_genome in new_genomes.items():
