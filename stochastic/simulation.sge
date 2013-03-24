@@ -2,7 +2,6 @@
 #$ -V
 #$ -cwd
 #$ -j y
-#$ -o /dev/null
 #$ -N ruggedsim
 #$ -q yoavram.q 
 #$ -l lilach,h_rt=48:00:00,mem_free=1G
@@ -28,7 +27,8 @@
 #$ -v in_phi=0
 #$ -v in_rho=1
 
-module load gcc/gcc461
+module load gcc/gcc472
 module load python/python-2.7.2
 
+python versions.py
 python simulation.py --r=${r} --s=${s} --H=${H} --mu=${mu} --tau=${tau} --pi=${pi} --phi=${phi} --rho=${rho} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --stats_interval=${stats_interval} --in_rate=${in_rate} --in_tick=${in_tick} --in_pi=${in_pi} --in_tau=${in_tau} --in_phi=${in_phi} --in_rho=${in_rho} --console --debug --job_name=$JOB_NAME
