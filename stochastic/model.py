@@ -55,7 +55,7 @@ def hamming_fitness_genome(genome, target_genome, s, H,num_loci):
 
 
 def hamming_fitness_genomes(genomes, target_genome, s, H, num_loci):
-	fitness = np.apply_along_axis(hamming_fitness_genome,1, genomes, target_genome,s,H,num_loci)
+	fitness = np.apply_along_axis(hamming_fitness_genome, 1, genomes, target_genome, s, H, num_loci)
 	return fitness
 
 
@@ -63,16 +63,8 @@ def genome_to_num(genome, num_loci):
 	return genome[:num_loci].nonzero()[0]
 
 
-def genome_to_num_w_mods(genome, num_loci):
-	return np.concatenate((genome[:num_loci].nonzero()[0], genome[num_loci:]))
-
 def genomes_to_nums(genomes, num_loci):
 	nums = [genome_to_num(g, num_loci) for g in genomes]
-	return nums
-
-
-def genomes_to_nums_w_mods(genomes, num_loci):
-	nums = [genome_to_num_w_mods(g, num_loci) for g in genomes]
 	return nums
 
 

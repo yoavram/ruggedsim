@@ -13,7 +13,7 @@ from model import create_mutation_rates_with_modifiers as create_muation_rates
 from model import create_mutation_free_population as create_population
 from model import mutation
 from model import hamming_fitness_genomes as create_fitness
-from model import genomes_to_nums_w_mods as genomes_to_nums
+from model import genomes_to_nums
 
 # utility functions
 
