@@ -6,15 +6,15 @@
 #$ -q yoavram.q 
 #$ -l lilach,h_rt=48:00:00,mem_free=1G
 
-#$ -v s=0.1
+#$ -v s=0.01
 #$ -v H=2
 #$ -v mu=0.003
 #$ -v tau=1
 #$ -v pi=0
-#$ -v pop_size=10000
+#$ -v pop_size=1000000
 #$ -v ticks=500
 #$ -v tick_interval=50
-#$ -v stats_interval=10
+#$ -v stats_interval=5
 #$ -v in_tick=-1
 
 module load gcc/gcc472
