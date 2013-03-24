@@ -33,7 +33,7 @@ def create_recombination_rates(r, num_classes):
 
 def create_mutation_rates_with_modifiers(mu, genomes, fitness, s, num_loci):
 	increase = genomes[:, num_loci]
-	rates = create_rates(basic_rate, genomes.shape[0])
+	rates = create_rates(mu, genomes.shape[0])
 	hypers = fitness < 1.0
 	rates[hypers] *= increase[hypers]
 	return rates
