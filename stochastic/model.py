@@ -27,7 +27,7 @@ def create_muation_rates(mu, num_classes):
 	return create_rates(mu, num_classes)
 
 
-def create_recombination_rates(mu, genomes, fitness, s, num_loci):
+def create_recombination_rates(r, genomes, fitness, s, num_loci):
 	return create_rates(r, genomes.shape[0])
 
 
