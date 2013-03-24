@@ -97,7 +97,7 @@ def mutation(population, genomes, mutation_rates, num_loci, target_genome, nums,
 	mutations  = np.array((mutations, population)).min(axis=0) # no more than one mutation per individual
 	# DEBUG STUFF
 	if total_mutations > mutations.sum():
-		logger.debug("Reduced %.4f of mutations from %d to %d" % ((1-mutations.sum()/float(total_mutations)), total_mutations, mutations.sum()))
+		logger.debug("Reduced %.4f of mutations from %d to %d" % ((1 - mutations.sum() / float(total_mutations)), total_mutations, mutations.sum()))
 	# DEBUG END
 	mutations_cumsum = mutations.cumsum()
 	total_mutations = mutations_cumsum[-1]

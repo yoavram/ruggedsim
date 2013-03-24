@@ -89,7 +89,7 @@ def run(ticks=10, tick_interval=1):
 			target_genome[0], target_genome[1] = 1, 1
 
 	toc = clock()
-	logger.info("Simulation finished, %d ticks, time elapsed %.3f seconds",tick, (toc-tic))
+	logger.info("Simulation finished, %d ticks, time elapsed %.3f seconds",tick, (toc - tic))
 
 	# serialization
 	filename = serialize(population, genomes, target_genome)
