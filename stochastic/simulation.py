@@ -10,7 +10,7 @@ import numpy as np
 
 from model import drift, selection, create_target_genome
 from model import create_mutation_rates_with_modifiers as create_muation_rates
-from model import create_recombination_rates_with_modifiers as create_recombination_rates
+from model import create_recombination_rates
 from model import create_mutation_free_population as create_population
 from model import mutation_recombination
 from model import hamming_fitness_genomes as create_fitness
@@ -68,7 +68,7 @@ def run(ticks=10, tick_interval=1):
 
 	# init population
 	target_genome = create_target_genome(num_loci)
-	modifiers = np.array([pi, tau, phi, rho])
+	modifiers = np.array([tau])
 	genomes = np.concatenate((target_genome, modifiers))
 	genomes.resize( (1, genomes.shape[0]) )
 	
