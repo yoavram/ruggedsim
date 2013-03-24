@@ -14,13 +14,13 @@
     "params_dir": "params",
     "params_ext": ".json",
     "params_file": "params.json",
-    "pi": 0,
+    "pi": 1,
     "pop_size": 1000000,
     "s": 0.01,
     "ser_dir": "serialization",
     "ser_ext": ".ser",
-    "stats_interval": 1,
+    "stats_interval": 10,
     "tau": 1,
-    "tick_interval": 10,
-    "ticks": 10
+    "tick_interval": 50,
+    "ticks": 500
 }
