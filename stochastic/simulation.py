@@ -10,9 +10,8 @@ import numpy as np
 
 from model import drift, selection, create_target_genome
 from model import create_mutation_rates_with_modifiers as create_muation_rates
-from model import create_recombination_rates
 from model import create_mutation_free_population as create_population
-from model import mutation_recombination
+from model import mutation
 from model import hamming_fitness_genomes as create_fitness
 from model import genomes_to_nums_w_mods as genomes_to_nums
 #from model import genomes_to_nums
@@ -112,7 +111,7 @@ def step(population, genomes, target_genome, fitness, mutation_rates, num_loci, 
 	population = selection(population, fitness)
 	population, genomes = clear(population, genomes)
 	fitness, mutation_rates, nums = update(genomes, target_genome, s, mu, pi, tau)
-	population, genomes = mutation_recombination(population, genomes, mutation_rates, num_loci, target_genome, nums, beta)
+	population, genomes = mutation(population, genomes, mutation_rates, num_loci, target_genome, nums, beta)
 	return population, genomes
 
 

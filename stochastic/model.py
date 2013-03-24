@@ -127,7 +127,7 @@ def invasion(population, genomes, modifiers, rate, num_loci):
 	return population, genomes
 
 
-def mutation_recombination(population, genomes, mutation_rates, num_loci, target_genome, nums, beta):
+def mutation(population, genomes, mutation_rates, num_loci, target_genome, nums, beta):
 	total_rates = mutation_rates
 	prob_mu = mutation_rates/total_rates
 	events = np.random.binomial(n=population, p=total_rates, size=population.shape)
