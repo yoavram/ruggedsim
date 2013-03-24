@@ -9,7 +9,7 @@
 
 #$ -v r=0.0
 #$ -v s=0.1
-#$ -v H=1
+#$ -v H=2
 #$ -v mu=0.003
 #$ -v tau=1
 #$ -v pi=0
@@ -18,11 +18,11 @@
 #$ -v pop_size=100000
 #$ -v envch_rate=0.0
 #$ -v envch_str=0
-#$ -v ticks=500
-#$ -v tick_interval=100
-#$ -v stats_interval=10
+#$ -v ticks=5
+#$ -v tick_interval=1
+#$ -v stats_interval=1
 #$ -v in_rate=0.0
-#$ -v in_tick=0
+#$ -v in_tick=3
 #$ -v in_pi=0
 #$ -v in_tau=1
 #$ -v in_phi=0
