@@ -80,7 +80,7 @@ def run(ticks=10, tick_interval=1):
 	for tick in range(ticks + 1):
 		fitness, mutation_rates, recombination_rates, nums = update(genomes, target_genome, s, mu ,r)
 		if stats_interval != 0 and tick % stats_interval == 0:
-			df = tabularize(population, nums, fitness, mutation_rates, recombination_rates, tick)
+			df = tabularize(population, nums, fitness, mutation_rates, tick)
 			header = False if tick > 0 else True
 			df.to_csv(output_file, header=header, mode='a', index_label='index')
 		
