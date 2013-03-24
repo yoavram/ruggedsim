@@ -2,31 +2,20 @@
 #$ -V
 #$ -cwd
 #$ -j y
-#$ -o /dev/null
-#$ -N ruggedsim
+#$ -N msb
 #$ -q yoavram.q 
 #$ -l lilach,h_rt=48:00:00,mem_free=1G
 
-#$ -v r=0.0
 #$ -v s=0.1
 #$ -v H=2
 #$ -v mu=0.003
 #$ -v tau=1
 #$ -v pi=0
-#$ -v phi=0
-#$ -v rho=1
-#$ -v pop_size=100000
-#$ -v envch_rate=0.0
-#$ -v envch_str=0
+#$ -v pop_size=10000
 #$ -v ticks=500
 #$ -v tick_interval=50
 #$ -v stats_interval=10
-#$ -v in_rate=0.0
 #$ -v in_tick=-1
-#$ -v in_pi=0
-#$ -v in_tau=1
-#$ -v in_phi=0
-#$ -v in_rho=1
 
 module load gcc/gcc472
 module load python/python-2.7.2
