@@ -99,34 +99,6 @@ def selection(population, fitness):
 	return population
 
 
-def draw_environmental_changes(ticks, envch_rate, envch_start=False):
-	changes = np.random.binomial(n=1, p=envch_rate, size=ticks)
-	if envch_start:
-		changes[0] = 1
-	return changes
-
-
-def environmental_change(target_genome, num_loci, envch_str):
-	changed_loci = choose(num_loci, envch_str)
-	target_genome[changed_loci] = (target_genome[changed_loci] + 1) % 2
-	return target_genome
-
-
-def choose(n, k):
- 	return random.sample(xrange(n), k)
-
-
-def invasion(population, genomes, modifiers, rate, num_loci):
-	invading_population = population.copy()
-	invading_population *= rate
-	population -= invading_population
-	invading_genomes = genomes.copy()
-	invading_genomes[:, num_loci:] = np.array(modifiers)
-	population = np.concatenate((population, invading_population),axis=0)
-	genomes = np.concatenate((genomes, invading_genomes),axis=0)
-	return population, genomes
-
-
 def mutation(population, genomes, mutation_rates, num_loci, target_genome, nums, beta):
 	total_rates = mutation_rates
 	prob_mu = mutation_rates/total_rates
