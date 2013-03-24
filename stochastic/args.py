@@ -27,18 +27,10 @@ def create_parser():
 		type=float,
 		metavar="float",
 		help="mutation rate")
-	parser.add_argument( "--r",
-		type=float,
-		metavar="float",
-		help="recombination rate")
 	parser.add_argument( "--beta",
 		type=float,
 		metavar="float",
 		help="beneficial to deleterious mutations ratio")
-	parser.add_argument( "--in_rate",
-		type=float,
-		metavar="float",
-		help="invasion rate")
 	parser.add_argument( "--in_tick",
 		type=int,
 		metavar="int",
@@ -51,30 +43,6 @@ def create_parser():
 		type=float,
 		metavar="float",
 		help="hypermutaion rate increase")
-	parser.add_argument( "--phi",
-		type=int,
-		metavar="int",
-		help="hyper-recombination threshold")
-	parser.add_argument( "--rho",
-		type=float,
-		metavar="float",
-		help="hyper-recombination rate increase")
-	parser.add_argument( "--in_pi",
-		type=int,
-		metavar="int",
-		help="invader hypermutaion threshold")
-	parser.add_argument( "--in_tau",
-		type=float,
-		metavar="float",
-		help="invader hypermutaion rate increase")
-	parser.add_argument( "--in_phi",
-		type=int,
-		metavar="int",
-		help="invader hyper-recombination threshold")
-	parser.add_argument( "--in_rho",
-		type=float,
-		metavar="float",
-		help="invader hyper-recombination rate increase")
 	parser.add_argument( "--ticks",
 		type=int,
 		metavar="integer",
@@ -91,22 +59,6 @@ def create_parser():
 		type=float,
 		metavar="float",
 		help="advantage to global maximum")
-	parser.add_argument( "--envch_rate",
-		type=float,
-		metavar="float",
-		help="environmental change rate")
-	parser.add_argument( "--envch_str",
-		type=int,
-		metavar="int",
-		help="environmental change strength")
-	parser.add_argument( "--envch_start",
-		action='store_true',
-		default=False,
-		help="change environment on startup")
-	parser.add_argument( "--rb",
-		action='store_true',
-		default=False,
-		help="use recombination barriers")
 	parser.add_argument( "--debug",
 		action='store_false',
 		default=True,
