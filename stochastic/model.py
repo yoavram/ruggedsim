@@ -92,26 +92,22 @@ def selection(population, fitness):
 
 
 def mutation(population, genomes, mutation_rates, num_loci, target_genome, nums, beta):
-	total_rates = mutation_rates
-	prob_mu = mutation_rates/total_rates
-	events = np.random.binomial(n=population, p=total_rates, size=population.shape)
-	total_events = events.sum()	
-	events  = np.array((events, population)).min(axis=0) # no more than one mutation per individual
+	mutations = np.random.binomial(n=population, p=mutation_rates, size=population.shape)
+	total_mutations = mutations.sum()	
+	mutations  = np.array((mutations, population)).min(axis=0) # no more than one mutation per individual
 	# DEBUG STUFF
-	if total_events > events.sum():
-		logger.debug("Reduced %.4f of events from %d to %d" % ((1-events.sum()/float(total_events)), total_events, events.sum()))
+	if total_mutations > mutations.sum():
+		logger.debug("Reduced %.4f of mutations from %d to %d" % ((1-mutations.sum()/float(total_mutations)), total_mutations, mutations.sum()))
 	# DEBUG END
-	mutations = np.round(events * prob_mu)
-	mutations = np.array([np.int(x) for x in mutations])
-	events_cumsum = events.cumsum()
-	total_events = events_cumsum[-1]
-	loci = np.random.randint(0, num_loci, total_events)
-	loci_split = np.split(loci, events.cumsum())[:-1] # split by strain
+	mutations_cumsum = mutations.cumsum()
+	total_mutations = mutations_cumsum[-1]
+	loci = np.random.randint(0, num_loci, total_mutations)
+	loci_split = np.split(loci, mutations.cumsum())[:-1] # split by strain
 	new_counts = {}
 	new_genomes = {}
 
 	for strain in range(population.shape[0]):
-		population[strain] = population[strain] - events[strain]
+		population[strain] = population[strain] - mutations[strain]
 		assert population[strain] >= 0  # ASSERT
 
 		_loci = loci_split[strain]	
