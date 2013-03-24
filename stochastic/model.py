@@ -31,11 +31,10 @@ def create_recombination_rates(r, genomes, fitness, s, num_loci):
 	return create_rates(r, genomes.shape[0])
 
 
-def create_mutation_rates_with_modifiers(mu, genomes, fitness, s, num_loci):
-	increase = genomes[:, num_loci]
+def create_mutation_rates_with_modifiers(mu, genomes, fitness, s, num_loci, pi, tau):
 	rates = create_rates(mu, genomes.shape[0])
-	hypers = fitness < 1.0
-	rates[hypers] *= increase[hypers]
+	hypers = fitness < pi
+	rates[hypers] *= tau
 	return rates
 
 
@@ -128,8 +127,8 @@ def invasion(population, genomes, modifiers, rate, num_loci):
 	return population, genomes
 
 
-def mutation_recombination(population, genomes, mutation_rates, recombination_rates, num_loci, target_genome, nums, beta, rec_bar=False):
-	total_rates = mutation_rates + recombination_rates
+def mutation_recombination(population, genomes, mutation_rates, num_loci, target_genome, nums, beta):
+	total_rates = mutation_rates
 	prob_mu = mutation_rates/total_rates
 	events = np.random.binomial(n=population, p=total_rates, size=population.shape)
 	total_events = events.sum()	

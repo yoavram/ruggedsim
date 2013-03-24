@@ -77,13 +77,13 @@ def run(ticks=10, tick_interval=1):
 	tick = 0 # so that '--ticks=-1' will work, that is, you could start a simulation without any ticks
 
 	for tick in range(ticks + 1):
-		fitness, mutation_rates, recombination_rates, nums = update(genomes, target_genome, s, mu, pi, tau)
+		fitness, mutation_rates, nums = update(genomes, target_genome, s, mu, pi, tau)
 		if stats_interval != 0 and tick % stats_interval == 0:
 			df = tabularize(population, nums, fitness, mutation_rates, tick)
 			header = False if tick > 0 else True
 			df.to_csv(output_file, header=header, mode='a', index_label='index')
 		
-		population, genomes = step(population, genomes, target_genome, fitness, mutation_rates, recombination_rates, num_loci, nums, beta, rb)
+		population, genomes = step(population, genomes, target_genome, fitness, mutation_rates, num_loci, nums, beta, rb)
 		
 		if tick_interval != 0 and tick % tick_interval == 0:
 			logger.debug("Tick %d", tick)
@@ -107,21 +107,20 @@ def run(ticks=10, tick_interval=1):
 	return population, genomes, target_genome, filename
 
 
-def step(population, genomes, target_genome, fitness, mutation_rates, recombination_rates, num_loci, nums, beta, rb):
+def step(population, genomes, target_genome, fitness, mutation_rates, num_loci, nums, beta, rb):
 	population = drift(population)
 	population = selection(population, fitness)
 	population, genomes = clear(population, genomes)
-	fitness, mutation_rates, recombination_rates, nums = update(genomes, target_genome, s, mu, pi, tau)
-	population, genomes = mutation_recombination(population, genomes, mutation_rates, recombination_rates, num_loci, target_genome, nums, beta, rb)
+	fitness, mutation_rates, nums = update(genomes, target_genome, s, mu, pi, tau)
+	population, genomes = mutation_recombination(population, genomes, mutation_rates, num_loci, target_genome, nums, beta)
 	return population, genomes
 
 
 def update(genomes, target_genome, s, mu, pi, tau):
 	fitness = create_fitness(genomes, target_genome, s, H, num_loci)
 	mutation_rates = create_muation_rates(mu, genomes, fitness, s, num_loci, pi, tau)
-	recombination_rates = create_recombination_rates(r, genomes, fitness, s, num_loci)
 	nums = genomes_to_nums(genomes, num_loci)
-	return fitness, mutation_rates, recombination_rates, nums
+	return fitness, mutation_rates, nums
 
 
 def clear(population, genomes):
