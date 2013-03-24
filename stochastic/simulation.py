@@ -80,7 +80,7 @@ def run(ticks=10, tick_interval=1):
 			header = False if tick > 0 else True
 			df.to_csv(output_file, header=header, mode='a', index_label='index')
 		
-		population, genomes = step(population, genomes, target_genome, fitness, mutation_rates, num_loci, nums, beta, rb)
+		population, genomes = step(population, genomes, target_genome, fitness, mutation_rates, num_loci, nums, beta)
 		
 		if tick_interval != 0 and tick % tick_interval == 0:
 			logger.debug("Tick %d", tick)
@@ -104,7 +104,7 @@ def run(ticks=10, tick_interval=1):
 	return population, genomes, target_genome, filename
 
 
-def step(population, genomes, target_genome, fitness, mutation_rates, num_loci, nums, beta, rb):
+def step(population, genomes, target_genome, fitness, mutation_rates, num_loci, nums, beta):
 	population = drift(population)
 	population = selection(population, fitness)
 	population, genomes = clear(population, genomes)
