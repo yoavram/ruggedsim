@@ -91,52 +91,42 @@ def selection(population, fitness):
 	return population
 
 
-def mutation(population, genomes, mutation_rates, num_loci, target_genome, nums, beta):
-	mutations = np.random.binomial(n=population, p=mutation_rates, size=population.shape)
+def mutation(population, mutation_rates, beta):
+	### background mutations
+	mutations = np.random.poisson(population * mutation_rates)
 	total_mutations = mutations.sum()	
 	mutations  = np.array((mutations, population)).min(axis=0) # no more than one mutation per individual
 	# DEBUG STUFF
 	if total_mutations > mutations.sum():
 		logger.debug("Reduced %.4f of mutations from %d to %d" % ((1 - mutations.sum() / float(total_mutations)), total_mutations, mutations.sum()))
 	# DEBUG END
-	mutations_cumsum = mutations.cumsum()
-	total_mutations = mutations_cumsum[-1]
-	loci = np.random.randint(0, num_loci, total_mutations)
-	loci_split = np.split(loci, mutations.cumsum())[:-1] # split by strain
-	new_counts = {}
-	new_genomes = {}
+	for strain in arange(population.shape[0]): 
+		strain_mutations = mutations[strain]
+		strain_mutations[-1] = 0
+		population[strain] -= strain_mutations
+		strain_mutations = np.roll(strain_mutations, 1)
+		population[strain] += strain_mutations
 
-	for strain in range(population.shape[0]):
-		population[strain] = population[strain] - mutations[strain]
-		assert population[strain] >= 0  # ASSERT
-
-		_loci = loci_split[strain]	
-		if len(_loci) == 0:
-			continue
-		allele_change = np.random.binomial(1, 1 - beta, len(_loci))
-		new_alleles = (target_genome[_loci] + allele_change) % 2 
-
-		for i, locus in enumerate(_loci):
-			new_allele = new_alleles[i]
-			key = (strain, locus, new_allele)
-			if key in new_counts:
-				new_counts[key] += 1
-			else:
-				new_genome = genomes[strain, :].copy()				
-				new_genome[locus] = new_allele
-				new_counts[key] = 1
-				new_genomes[key] = new_genome
-
-	if len(new_genomes) > 0:
-		for key, new_genome in new_genomes.items():
-			n = genome_to_num(new_genome, num_loci)
-			index = model_c.find_row_nums(nums, n)
-			if index != -1:
-				new_genomes.pop(key)
-				population[index] += new_counts.pop(key)
-
-	if len(new_genomes) > 0:
-		population = np.append(population, new_counts.values())
-		genomes = np.vstack((genomes, new_genomes.values()))
-
-	return population, genomes
+	### adaptive mutations
+	mutations = np.random.poisson(mutation_rates[:3,:] * beta * population[:3,:])
+	for strain,load in zip(*mutations.nonzero()):
+		#print "strain",strain,"load",load,population[strain,load], mutations[strain,load]
+		if strain > 0:
+			population[strain,load] -= mutations[strain,load]
+			population[3,load] += mutations[strain,load]
+			#print population[3,load]
+		elif strain == 0:
+			# double mutations
+			strain_size = population[strain,load]
+			individual_mutations = np.random.multinomial(mutations[strain,load], [1./strain_size] * strain_size)
+			for individual, num_mutations in enumerate(individual_mutations):
+			    	#print "individual",individual,"num_mutations",num_mutations
+				if num_mutations == 1:
+					new_strain = 1 + (individual % 2)
+					population[strain, load] -= 1
+					population[new_strain, load] += 1
+				elif num_mutations > 1:
+					population[strain, load] -= 1
+					population[3, load] += 1
+			#print  population[3,load]
+	return population
