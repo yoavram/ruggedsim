@@ -52,6 +52,7 @@ def mutation_rates_matrix(U, pi, tau, w):
 
 
 def big_mutation_matrix(mutation_rates, repeats, small_mutation_matrix_function):
+	assert mutation_rates.shape[0] == 3 or mutation_rates.shape[1] == 3
 	M = np.zeros((0,0))
 	for i in range(repeats):
 		m = small_mutation_matrix_function(mutation_rates[i,:])
@@ -74,7 +75,6 @@ def small_background_mutation_matrix(mutation_rates):
 
 def small_strain_mutation_matrix(mutation_rates):
 	assert mutation_rates.shape[0] == len(mutation_rates)
-	assert mutation_rates.shape[1] == 3
 	mu = mutation_rates
 	u = np.array([ [ (1 - mu[0]) ** 2, 0, 0 ], [2 * mu[0] * (1 - mu[0]) , 1 - mu[1], 0], [ mu[0] ** 2, mu[1], 1 ] ])
 	return u
