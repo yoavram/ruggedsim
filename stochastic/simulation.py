@@ -117,7 +117,7 @@ def run():
 	output_filename = cat_file_path(data_ext)
 	make_path(output_filename)
 	W = [x for i,x in enumerate(W) if i % stats_interval == 0]
-	data = {'G':G, 'pop_size':pop_size, 's':s, 'H':H, 'U':U, 'beta':beta, 'pi':pi, 'tau':tau, 'p':p.tolist(), 'W':W}
+	data = {'G':G, 'pop_size':pop_size, 's':s, 'H':H, 'U':U, 'beta':beta, 'pi':pi, 'tau':tau, 'p':p.tolist(), 'W':W, 'T':tick}
 	with gzip.open(output_filename, 'w') as f:
 		json.dump(data, f, indent=4, separators=(',', ': '))
 	logger.info("Saved output to %s", output_filename)
