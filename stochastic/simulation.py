@@ -114,9 +114,9 @@ def run():
 	# output file
 	output_filename = cat_file_path(data_ext)
 	make_path(output_filename)
-	data = {'p':p.tolist(), 'W':W, 's':s, 'H':H, 'U':U, 'pop_size':pop_size, 'beta':beta, 'pi':pi, 'tau':tau, 'G':G}
+	data = {'G':G, 'pop_size':pop_size, 's':s, 'H':H, 'U':U, 'beta':beta, 'pi':pi, 'tau':tau, 'p':p.tolist(), 'W':W}
 	with open(output_filename, 'w') as f:
-		json.dump(data, f, sort_keys=True, indent=4, separators=(',', ': '))
+		json.dump(data, f, indent=4, separators=(',', ': '))
 	logger.info("Saved output to %s", output_filename)
 	
 	return p, W, output_filename
