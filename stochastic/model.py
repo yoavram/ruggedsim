@@ -1,132 +1,91 @@
-import numpy as np
-import random
-from math import floor
-from scipy.spatial.distance import cdist, hamming
-import cython_load
-import model_c
-
 import log
 logger = log.get_logger('model')
 
-
-def create_uniform_mutation_load_population(pop_size, num_classes):
-	return np.random.multinomial(pop_size, [1.0 / num_classes] * num_classes)
-
-
-def create_mutation_free_population(pop_size, num_classes):
-	population = np.zeros(num_classes, dtype=np.int)
-	population[0] = pop_size
-	return population
+import numpy as np
+from scipy.stats import poisson
+from scipy.linalg import block_diag
 
 
-def create_rates(basic_rate, num_classes):
-	return np.array([basic_rate] * num_classes)
+def mprint(M, precision=3):
+    '''mprint(matrix, precision=int) -> None
+    pretty prints a matrix with specified precision.
+    '''
+    for row in M:
+        for cell in row:
+            print ("%." +str(precision) + "f") % cell,
+        print
 
 
-def create_muation_rates(mu, num_classes):
-	return create_rates(mu, num_classes)
+def mutation_free_population(strains, G):
+	p = array([ [0] * G for _ in range(strains) ], dtype=np.float64)
+	p[0,0] = 1
+	assert np.allclose(p.sum(), 1)
+	return p
 
 
-def create_recombination_rates(r, genomes, fitness, s, num_loci):
-	return create_rates(r, genomes.shape[0])
+def uniform_population(strains, G):
+	x = 1.0 / (strains * G)
+	p =  ones((strains, G), dtype=np.float64) * x
+	assert np.allclose(p.sum(), 1)
+	return p
 
 
-def create_mutation_rates_with_modifiers(mu, genomes, fitness, s, num_loci, pi, tau):
-	rates = create_rates(mu, genomes.shape[0])
-	hypers = fitness < pi
-	rates[hypers] *= tau
-	return rates
+def smooth_fitness(s, H, strains, G):
+	w = array([ [ (1 - s ) ** (k + i) for k in range(G)] for i in range(strains) ])
+	return w
 
 
-def create_target_genome(num_loci):
-	return np.array(np.zeros(num_loci), dtype=np.int)
+def rugged_fitness(s, H, strains, G):
+	w = smooth_fitness(s, H, strains, G)
+	w[-1,:] *= (1 + s * H)/((1 - s) ** 2) # fix fitness of the double mutant strain
+	return w
 
 
-def hamming_fitness_genome(genome, target_genome, s, H,num_loci):
-	load = hamming(genome[:num_loci], target_genome) * target_genome.shape[0]
-	fitness = (1 - s) ** load
-	if target_genome[:2].sum() == 2:
-		genotype = genome[:2].sum()
-		if  genotype == 2:
-			fitness *= (1 + s * H)
-		elif genotype == 0:
-			fitness /= (1 - s) ** 2
-	return fitness
+def mean_fitness(p, w):
+	return (p*w).sum()
 
 
-def hamming_fitness_genomes(genomes, target_genome, s, H, num_loci):
-	fitness = np.apply_along_axis(hamming_fitness_genome, 1, genomes, target_genome, s, H, num_loci)
-	return fitness
+def mutation_rates_matrix(U, pi, tau, w):
+	mutation_rates = np.ones(w.shape) * U
+	mutation_rates[w < pi] *= tau
+	return mutation_rates
 
 
-def genome_to_num(genome, num_loci):
-	return genome[:num_loci].nonzero()[0]
+def big_mutation_matrix(mutation_rates, repeats, small_mutation_matrix_function):
+	M = np.zeros((0,0))
+	for i in range(repeats):
+		m = small_mutation_matrix_function(mutation_rates[i,:])
+		M = block_diag(M, m)
+	assert allclose(M.sum(axis=0),1)
+	return M
 
 
-def genomes_to_nums(genomes, num_loci):
-	nums = [genome_to_num(g, num_loci) for g in genomes]
-	return nums
+def small_background_mutation_matrix(mutation_rates):
+	assert mutation_rates.shape[0] == len(mutation_rates)
+	mutation_rvs = poisson(mutation_rates)
+	m = diag(mutation_rvs.pmf(0))
+	for k in range(1,mutation_rates.shape[0]):
+		m += np.diag(mutation_rvs.pmf(k)[:-k],-k)
+	# absorb further mutations in the last class
+	for j in range(mutation_rates.shape[0]):
+		m[-1,j] = 1 - mutation_rvs.cdf(mutation_rates.shape[0] - 2 - j)[j]
+	return m
 
 
-def find_row_nums(nums, target):
-	# cython version is slightly faster, last time I checked
-	for i,n in enumerate(nums):
-		if np.array_equal(n, target):
-			return i
-	return -1
+def small_strain_mutation_matrix(mutation_rates):
+	assert mutation_rates.shape[0] == len(mutation_rates)
+	assert mutation_rates.shape[1] == 3
+	mu = mutation_rates
+	u = array([ [ (1 - mu[0]) ** 2, 0, 0 ], [2 * mu[0] * (1 - mu[0]) , 1 - mu[1], 0], [ mu[0] ** 2, mu[1], 1 ] ])
+	return u
 
 
-def drift(population):
-	pop_size = population.sum()
-	p = population / float(pop_size)
-	population[:] = np.random.multinomial(pop_size, p)
-	return population
-
-
-def selection(population, fitness):
-	pop_size = population.sum()
-	p = population * fitness.reshape(population.shape)
-	p[:] = p / p.sum()
-	population[:] = np.random.multinomial(pop_size, p)
-	return population
-
-
-def mutation(population, mutation_rates, beta):
-	### background mutations
-	mutations = np.random.poisson(population * mutation_rates)
-	total_mutations = mutations.sum()	
-	mutations  = np.array((mutations, population)).min(axis=0) # no more than one mutation per individual
-	# DEBUG STUFF
-	if total_mutations > mutations.sum():
-		logger.debug("Reduced %.4f of mutations from %d to %d" % ((1 - mutations.sum() / float(total_mutations)), total_mutations, mutations.sum()))
-	# DEBUG END
-	for strain in arange(population.shape[0]): 
-		strain_mutations = mutations[strain]
-		strain_mutations[-1] = 0
-		population[strain] -= strain_mutations
-		strain_mutations = np.roll(strain_mutations, 1)
-		population[strain] += strain_mutations
-
-	### adaptive mutations
-	mutations = np.random.poisson(mutation_rates[:3,:] * beta * population[:3,:])
-	for strain,load in zip(*mutations.nonzero()):
-		#print "strain",strain,"load",load,population[strain,load], mutations[strain,load]
-		if strain > 0:
-			population[strain,load] -= mutations[strain,load]
-			population[3,load] += mutations[strain,load]
-			#print population[3,load]
-		elif strain == 0:
-			# double mutations
-			strain_size = population[strain,load]
-			individual_mutations = np.random.multinomial(mutations[strain,load], [1./strain_size] * strain_size)
-			for individual, num_mutations in enumerate(individual_mutations):
-			    	#print "individual",individual,"num_mutations",num_mutations
-				if num_mutations == 1:
-					new_strain = 1 + (individual % 2)
-					population[strain, load] -= 1
-					population[new_strain, load] += 1
-				elif num_mutations > 1:
-					population[strain, load] -= 1
-					population[3, load] += 1
-			#print  population[3,load]
-	return population
+def find_fixation_time(p, W, w, U):
+	'''a heuristic to calculate the fixation time from the results of a simulation
+	'''
+	w0 = w[p==p.max()] * e**(-U)
+	if w0 < 1:
+		return np.infty,0
+	W0 = W >= w0
+	t0 = W0.argmax()
+	return t0, W[t0]

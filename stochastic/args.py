@@ -10,7 +10,7 @@ def create_parser():
 	parser.add_argument("--params_file",
 		type=str,
 		metavar="filename",
-		default="params.json",
+		default="params.params",
 		help="parameters filename")
 	parser.add_argument("--job_name",
 		type=str,
@@ -23,34 +23,30 @@ def create_parser():
 		type=int,
 		metavar="integer",
 		help="population size")
-	parser.add_argument( "--mu",
+	parser.add_argument( "--U",
 		type=float,
 		metavar="float",
 		help="mutation rate")
 	parser.add_argument( "--beta",
 		type=float,
 		metavar="float",
-		help="beneficial to deleterious mutations ratio")
-	parser.add_argument( "--in_tick",
-		type=int,
-		metavar="int",
-		help="invasion tick")
+		help="strain mutation ratio")
 	parser.add_argument( "--pi",
 		type=int,
 		metavar="int",
-		help="hypermutaion threshold")
+		help="hypermutaion threshold in fitness")
 	parser.add_argument( "--tau",
 		type=float,
 		metavar="float",
-		help="hypermutaion rate increase")
+		help="hypermutaion rate fold increase")
 	parser.add_argument( "--ticks",
 		type=int,
 		metavar="integer",
 		help="number of ticks")
-	parser.add_argument( "--num_loci",
+	parser.add_argument( "--G",
 		type=int,
 		metavar="integer",
-		help="number of loci")
+		help="max number of harmful alleles")
 	parser.add_argument( "--s",
 		type=float,
 		metavar="float",
@@ -58,7 +54,7 @@ def create_parser():
 	parser.add_argument( "--H",
 		type=float,
 		metavar="float",
-		help="advantage to global maximum")
+		help="advantage to double mutant")
 	parser.add_argument( "--debug",
 		action='store_false',
 		default=True,
@@ -71,10 +67,6 @@ def create_parser():
 		type=int,
 		metavar="integer",
 		help="logging tick interval, 0 for no logging")
-	parser.add_argument( "--stats_interval",
-		type=int,
-		metavar="integer",
-		help="statistics gathering tick interval, 0 for no statistics gathering")
 	return parser
 
 
@@ -103,8 +95,6 @@ def args_and_params():
 	# this is a workaround for sumatra bug (https://groups.google.com/forum/?fromgroups=#!topic/sumatra-users/OIuBWxJF_W0)
 	string_to_boolean(parameters,'console')
 	string_to_boolean(parameters,'debug')
-	string_to_boolean(parameters,'rb')
-	string_to_boolean(parameters,'envch_start')
 	return parameters
 
 def string_to_boolean(parameters, field):

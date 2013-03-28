@@ -1,0 +1,20 @@
+{
+    "beta": 0.2,
+    "console": true,
+    "debug": true,
+    "H": 1,
+    "job_name": "ruggedsim",
+    "log_ext": ".log",
+    "U": 0.003,
+    "G": 50,
+    "output_dir": "output",
+    "data_ext": ".data",
+    "params_ext": ".params",
+    "params_file": "params.params",
+    "pi": 0,
+    "pop_size": 1e6,
+    "s": 0.01,
+    "tau": 1,
+    "tick_interval": 100,
+    "ticks": 5000
+}
