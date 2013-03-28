@@ -2,7 +2,7 @@
     "beta": 2e-4,
     "console": true,
     "debug": true,
-    "H": 1,
+    "H": 2,
     "job_name": "ruggedsim",
     "log_ext": ".log",
     "U": 0.003,

@@ -8,16 +8,16 @@
 
 #$ -v s=0.01
 #$ -v H=2
-#$ -v mu=0.003
-#$ -v tau=1
+#$ -v U=0.003
+#$ -v beta=2e-4
 #$ -v pi=0
-#$ -v pop_size=1000000
-#$ -v ticks=500
-#$ -v tick_interval=50
-#$ -v stats_interval=5
-#$ -v in_tick=-1
+#$ -v tau=1
+#$ -v pop_size=1e6
+#$ -v G=25
+#$ -v ticks=50000
+#$ -v tick_interval=1000
 
 module load gcc/gcc472
 module load python/python-2.7.2
 
-python simulation.py --s=${s} --H=${H} --mu=${mu} --tau=${tau} --pi=${pi} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --stats_interval=${stats_interval} --in_tick=${in_tick} --console --debug --job_name=$JOB_NAME
+python simulation.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --console --debug --job_name=$JOB_NAME
