@@ -9,7 +9,7 @@
 #$ -v s=0.01
 #$ -v H=2
 #$ -v U=0.003
-#$ -v beta=2e-4
+#$ -v beta=0.0002
 #$ -v pi=0
 #$ -v tau=1
 #$ -v pop_size=1000000
@@ -20,4 +20,4 @@
 module load gcc/gcc472
 module load python/python-2.7.2
 
-python simulation.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --console --debug --job_name=$JOB_NAME
+python simulation.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --job_name=$JOB_NAME
