@@ -6,7 +6,7 @@
     "job_name": "ruggedsim",
     "log_ext": ".log",
     "U": 0.003,
-    "G": 50,
+    "G": 25,
     "output_dir": "output",
     "data_ext": ".data",
     "params_ext": ".params",
