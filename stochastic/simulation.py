@@ -29,9 +29,9 @@ import args, params
 args_and_params = args.args_and_params()
 globals().update(args_and_params)
 if not 'simulation_id' in args_and_params:
-	simulation_id = "pop_%d_G_%d_s_%g_H_%g_U_%g_beta_%g_pi_%g_tau_%g" % (pop_size,G,s,H,U,beta,pi,tau)
-	datetime_str = datetime.now().strftime('%Y-%b-%d_%H-%M-%S-%f')
-	args_and_params['simulation_id'] = simulation_id + '_' + datetime_str
+	simulation_id = "pop_%d_G_%d_s_%g_H_%g_U_%g_beta_%g_pi_%g_tau_%g_" % (pop_size,G,s,H,U,beta,pi,tau)
+	simulation_id += datetime.now().strftime('%Y-%b-%d_%H-%M-%S-%f')
+	args_and_params['simulation_id'] = simulation_id
 params_filename = cat_file_path(params_ext)
 make_path(params_filename)
 params.save(params_filename, args_and_params)
