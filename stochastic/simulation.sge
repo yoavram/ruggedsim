@@ -2,7 +2,7 @@
 #$ -V
 #$ -cwd
 #$ -j y
-#$ -N msb
+#$ -N fixation 
 #$ -q yoavram.q 
 #$ -l lilach,h_rt=48:00:00,mem_free=1G
 
@@ -12,7 +12,7 @@
 #$ -v beta=2e-4
 #$ -v pi=0
 #$ -v tau=1
-#$ -v pop_size=1e6
+#$ -v pop_size=1000000
 #$ -v G=25
 #$ -v ticks=50000
 #$ -v tick_interval=1000
