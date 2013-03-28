@@ -66,6 +66,7 @@ def run():
 	
 	fixation_count = 0
 	tick = 0
+	change_tick = -1
 
 	while tick < ticks and fixation_count < 2000:
 		# selection
@@ -87,13 +88,16 @@ def run():
 
 		# mean fitness
 		W += [mean_fitness(p,w)]
-		
+	
+		# monitoring and logging
 
 		if tick_interval != 0 and tick % tick_interval == 0:
 			logger.debug("Tick %d", tick)
-		if W[-1] < e ** (-(1 + beta) * U):
+
+		if W[-1] < e ** (-(1 + beta) * U) and change_tick == -1:
 			logger.debug("Changing fitness landscape at tick %d with mean fitness %f" % (tick, W[-1]))
 			w = rugged_fitness(s, H, 3, G)
+			change_tick = tick
 		if W[-1] > 1:
 			if fixation_count == 0:
 				logger.debug("Started counting fixation at tick %d" % tick)
