@@ -70,12 +70,6 @@ def run():
 	tick = 0
 
 	while tick < ticks and fixation_count < 2000:
-		# stats
-		if stats_interval != 0 and tick % stats_interval == 0:
-			df = tabularize(population, nums, fitness, mutation_rates, tick)
-			header = False if tick > 0 else True
-			df.to_csv(output_file, header=header, mode='a', index_label='index')
-
 		# selection
 		p = w * p
 		p /= p.sum()
