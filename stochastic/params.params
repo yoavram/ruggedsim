@@ -1,5 +1,5 @@
 {
-    "beta": 2e-4,
+    "beta": 0.0002,
     "console": true,
     "debug": true,
     "H": 2,
@@ -12,9 +12,9 @@
     "params_ext": ".params",
     "params_file": "params.params",
     "pi": 0,
-    "pop_size": 1e6,
+    "pop_size":1000000,
     "s": 0.01,
     "tau": 1,
-    "tick_interval": 100,
-    "ticks": 5000
+    "tick_interval": 1000,
+    "ticks": 50000
 }
