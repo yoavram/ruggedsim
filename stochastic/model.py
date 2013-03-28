@@ -2,6 +2,7 @@ import log
 logger = log.get_logger('model')
 
 import numpy as np
+from numpy import e
 from scipy.stats import poisson
 from scipy.linalg import block_diag
 

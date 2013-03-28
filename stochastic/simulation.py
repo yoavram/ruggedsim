@@ -2,11 +2,9 @@ from time import clock
 from os import makedirs, rename
 from os.path import sep, exists, dirname
 from datetime import datetime
-import pickle
-import gzip
 
-import pandas as pd
 import numpy as np
+from numpy import e
 
 from model import *
 
@@ -84,7 +82,7 @@ def run():
 		        
 		# drift
 		if pop_size > 0:
-			p = multinomial(pop_size, p.flatten()) / pop_size
+			p = np.random.multinomial(pop_size, p.flatten()) / pop_size
 			p = p.reshape(shape)
 
 		# mean fitness
