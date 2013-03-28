@@ -72,8 +72,7 @@ def run():
 	while tick < ticks and fixation_count < 2000:		
 		# selection
 		p = w * p
-		p /= p.sum()
-
+		
 		# strain mutations
 		p = Mu.dot( p.flatten(order="F") )
 		p = p.reshape(shape, order="F")
@@ -81,10 +80,12 @@ def run():
 		# background mutations 
 		p = Mm.dot( p.flatten(order="C") )
 		p = p.reshape(shape, order="C")
-		        
+
+		p /= p.sum()
+
 		# drift
 		if pop_size > 0:
-			p = np.random.multinomial(pop_size, p.flatten()) / pop_size
+			p = np.random.multinomial(pop_size, p.flatten()) / np.float64(pop_size)
 			p = p.reshape(shape)
 
 		# mean fitness
