@@ -2,6 +2,7 @@ from time import clock
 from os import makedirs, rename
 from os.path import sep, exists, dirname
 from datetime import datetime
+import json
 
 import numpy as np
 from numpy import e
