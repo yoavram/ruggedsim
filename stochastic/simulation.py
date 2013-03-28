@@ -30,7 +30,7 @@ import args, params
 args_and_params = args.args_and_params()
 globals().update(args_and_params)
 if not 'simulation_id' in args_and_params:
-	simulation_id = "U_%f_beta_%f_s_%f_H_%f_pi_%f_tau_%f_pop_%d_G_%d" % (U,beta,s,H,pi,tau,pop,G)
+	simulation_id = "U_%f_beta_%f_s_%f_H_%f_pi_%f_tau_%f_pop_%d_G_%d" % (U,beta,s,H,pi,tau,pop_size,G)
 	datetime_str = datetime.now().strftime('%Y-%b-%d_%H-%M-%S-%f')
 	args_and_params['simulation_id'] = simulation_id + '_' + datetime_str
 params_filename = cat_file_path(params_ext)
