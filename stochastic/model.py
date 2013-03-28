@@ -17,7 +17,7 @@ def mprint(M, precision=3):
 
 
 def mutation_free_population(strains, G):
-	p = array([ [0] * G for _ in range(strains) ], dtype=np.float64)
+	p = np.array([ [0] * G for _ in range(strains) ], dtype=np.float64)
 	p[0,0] = 1
 	assert np.allclose(p.sum(), 1)
 	return p
@@ -31,7 +31,7 @@ def uniform_population(strains, G):
 
 
 def smooth_fitness(s, H, strains, G):
-	w = array([ [ (1 - s ) ** (k + i) for k in range(G)] for i in range(strains) ])
+	w = np.array([ [ (1 - s ) ** (k + i) for k in range(G)] for i in range(strains) ])
 	return w
 
 
@@ -56,14 +56,14 @@ def big_mutation_matrix(mutation_rates, repeats, small_mutation_matrix_function)
 	for i in range(repeats):
 		m = small_mutation_matrix_function(mutation_rates[i,:])
 		M = block_diag(M, m)
-	assert allclose(M.sum(axis=0),1)
+	assert np.allclose(M.sum(axis=0),1)
 	return M
 
 
 def small_background_mutation_matrix(mutation_rates):
 	assert mutation_rates.shape[0] == len(mutation_rates)
 	mutation_rvs = poisson(mutation_rates)
-	m = diag(mutation_rvs.pmf(0))
+	m = np.diag(mutation_rvs.pmf(0))
 	for k in range(1,mutation_rates.shape[0]):
 		m += np.diag(mutation_rvs.pmf(k)[:-k],-k)
 	# absorb further mutations in the last class
@@ -76,7 +76,7 @@ def small_strain_mutation_matrix(mutation_rates):
 	assert mutation_rates.shape[0] == len(mutation_rates)
 	assert mutation_rates.shape[1] == 3
 	mu = mutation_rates
-	u = array([ [ (1 - mu[0]) ** 2, 0, 0 ], [2 * mu[0] * (1 - mu[0]) , 1 - mu[1], 0], [ mu[0] ** 2, mu[1], 1 ] ])
+	u = np.array([ [ (1 - mu[0]) ** 2, 0, 0 ], [2 * mu[0] * (1 - mu[0]) , 1 - mu[1], 0], [ mu[0] ** 2, mu[1], 1 ] ])
 	return u
 
 
