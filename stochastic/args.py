@@ -67,6 +67,10 @@ def create_parser():
 		type=int,
 		metavar="integer",
 		help="logging tick interval, 0 for no logging")
+	parser.add_argument( "--stats_interval",
+		type=int,
+		metavar="integer",
+		help="statistics tick interval")
 	return parser
 
 

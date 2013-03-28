@@ -3,6 +3,7 @@ from os import makedirs, rename
 from os.path import sep, exists, dirname
 from datetime import datetime
 import json
+import gzip
 
 import numpy as np
 from numpy import e
@@ -115,8 +116,9 @@ def run():
 	# output file
 	output_filename = cat_file_path(data_ext)
 	make_path(output_filename)
+	W = [x for i,x in W if i % stats_interval == 0]
 	data = {'G':G, 'pop_size':pop_size, 's':s, 'H':H, 'U':U, 'beta':beta, 'pi':pi, 'tau':tau, 'p':p.tolist(), 'W':W}
-	with open(output_filename, 'w') as f:
+	with gzip.open(output_filename, 'w') as f:
 		json.dump(data, f, indent=4, separators=(',', ': '))
 	logger.info("Saved output to %s", output_filename)
 	

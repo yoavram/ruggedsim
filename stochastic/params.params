@@ -16,5 +16,6 @@
     "s": 0.01,
     "tau": 1,
     "tick_interval": 1000,
-    "ticks": 50000
+    "ticks": 50000,
+    "stats_interval": 100
 }

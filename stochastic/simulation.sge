@@ -14,10 +14,11 @@
 #$ -v tau=10
 #$ -v pop_size=1000000
 #$ -v G=25
-#$ -v ticks=500000
+#$ -v ticks=1000000
 #$ -v tick_interval=10000
+#$ -v stats_interval=100
 
 module load gcc/gcc472
 module load python/python-2.7.2
 
-python simulation.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --job_name=$JOB_NAME
+python simulation.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --stats_interval=${stats_interval} --G=${G} --job_name=$JOB_NAME
