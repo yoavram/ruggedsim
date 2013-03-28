@@ -68,7 +68,7 @@ def run():
 	tick = 0
 	change_tick = -1
 
-	while tick < ticks and fixation_count < 2000:
+	while tick < ticks and fixation_count < 2000:		
 		# selection
 		p = w * p
 		p /= p.sum()
@@ -106,6 +106,7 @@ def run():
 			if fixation_count > 0:
 				logger.debug("Stopped counting fixation at tick %d" % tick)
 			fixation_count = 0
+		tick += 1
 	toc = clock()
 	logger.info("Simulation finished, %d ticks, time elapsed %.3f seconds",tick, (toc - tic))
 	
