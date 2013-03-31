@@ -4,19 +4,19 @@
 #$ -j y
 #$ -N fixation 
 #$ -q yoavram.q 
-#$ -l lilach,h_rt=48:00:00,mem_free=1G
+#$ -l lilach,mem_free=1G
 
-#$ -v s=0.01
+#$ -v s=0.1
 #$ -v H=2
 #$ -v U=0.003
 #$ -v beta=0.0002
-#$ -v pi=0
+#$ -v pi=1
 #$ -v tau=10
-#$ -v pop_size=1000000
+#$ -v pop_size=10000000
 #$ -v G=25
-#$ -v ticks=1000000
-#$ -v tick_interval=10000
-#$ -v stats_interval=100
+#$ -v ticks=100000000
+#$ -v tick_interval=100000
+#$ -v stats_interval=100000
 
 module load gcc/gcc472
 module load python/python-2.7.2
