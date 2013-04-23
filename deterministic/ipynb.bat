@@ -1,1 +1,1 @@
-ipython notebook --pylab=inline --ipython-dir=d:\workspace\work\deterministic
+ipython notebook --pylab=inline --profile=default --ipython-dir=.
