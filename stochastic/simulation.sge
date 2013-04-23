@@ -2,7 +2,7 @@
 #$ -V
 #$ -cwd
 #$ -j y
-#$ -N fixation 
+#$ -N appearances 
 #$ -l lilach,mem_free=1G
 
 #$ -v s=0.1
