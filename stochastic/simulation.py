@@ -69,6 +69,7 @@ def run():
 	fixation_count = 0
 	tick = 0
 	change_tick = -1
+	appearances = []
 
 	while tick < ticks and fixation_count < 2000:		
 		# selection
@@ -101,14 +102,15 @@ def run():
 			logger.debug("Changing fitness landscape at tick %d with mean fitness %f" % (tick, W[-1]))
 			w = rugged_fitness(s, H, 3, G)
 			change_tick = tick
-		if W[-1] > 1:
+		if p[2].sum() > 1:
 			if fixation_count == 0:
 				logger.debug("Started counting fixation at tick %d" % tick)
+				appearances.append(tick)
 			fixation_count += 1
 		else:
 			if fixation_count > 0:
 				logger.debug("Stopped counting fixation at tick %d" % tick)
-			fixation_count = 0
+				fixation_count = 0
 		tick += 1
 	toc = clock()
 	logger.info("Simulation finished, %d ticks, time elapsed %.3f seconds",tick, (toc - tic))
@@ -117,7 +119,20 @@ def run():
 	output_filename = cat_file_path(data_ext)
 	make_path(output_filename)
 	W = [x for i,x in enumerate(W) if i % stats_interval == 0]
-	data = {'G':G, 'pop_size':pop_size, 's':s, 'H':H, 'U':U, 'beta':beta, 'pi':pi, 'tau':tau, 'p':p.tolist(), 'W':W, 'T':tick}
+	data = {'G':G, 
+		'pop_size':pop_size, 
+		's':s, 
+		'H':H, 
+		'U':U, 
+		'beta':beta, 
+		'pi':pi, 
+		'tau':tau, 
+		'p':p.tolist(), 
+		'W':W, 
+		'ticks':tick, 
+		'apps':appearances, 
+		'T':appearances[-1]  
+	}
 	with gzip.open(output_filename, 'w') as f:
 		json.dump(data, f, indent=4, separators=(',', ': '))
 	logger.info("Saved output to %s", output_filename)
