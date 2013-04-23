@@ -130,9 +130,12 @@ def run():
 		'p':p.tolist(), 
 		'W':W, 
 		'ticks':tick, 
-		'apps':appearances, 
-		'T':appearances[-1]  
+		'apps':appearances
 	}
+	if len(appearances) > 0:
+		data['T'] = appearances[-1]  
+	else:
+		data['T'] = None
 	with gzip.open(output_filename, 'w') as f:
 		json.dump(data, f, indent=4, separators=(',', ': '))
 	logger.info("Saved output to %s", output_filename)
