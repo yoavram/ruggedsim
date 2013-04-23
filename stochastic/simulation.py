@@ -102,7 +102,7 @@ def run():
 			logger.debug("Changing fitness landscape at tick %d with mean fitness %f" % (tick, W[-1]))
 			w = rugged_fitness(s, H, 3, G)
 			change_tick = tick
-		if p[2].sum() > 0:
+		if p[2].sum() > 0 and change_tick >= 0:
 			if fixation_count == 0:
 				logger.debug("Started counting fixation at tick %d" % tick)
 				appearances.append(tick)
