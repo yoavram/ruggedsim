@@ -6,18 +6,14 @@ library(reshape)
 ggplot2::theme_set(theme_bw())
 
 plot.on.tau <- function(df, title='') {
-  q <- ggplot(data=df, mapping=aes(x=tau, y=time.mean, color=s, group=s)) +
-    geom_point() +
-    geom_line() +
-    geom_errorbar(aes(ymax = time.mean + time.se, ymin=time.mean - time.se)) + 
-    scale_y_log10() +
-    labs(x=expression(tau), y="Average waiting time", title=title) 
-  return(q)
+    q <- ggplot(df, aes(x=tau,y=value,group=variable,color=variable,linetype=variable))+ 
+                  geom_line() 
+                  
 }
 
 ## READ DATA
-df <- read.csv(file='appearances.csv.gz', header=T)
-df <- subset(df, pi==1)
+df <- read.csv(file='../stochastic/appearances.csv.gz', header=T)
+df <- subset(df, pi==1 & s==0.05)
 
 ## CALC ADAPTATION
 dff <- ddply(df, .(G,H,U,beta,pi,pop_size,s,tau, fname), summarize,
@@ -35,7 +31,17 @@ appearance.df <- ddply(df, .(G,H,U,beta,pi,pop_size,s,tau), summarize,
              time.sd = sd(dif),
              time.se = sd(dif)/sqrt(length(dif)),
              prob.mean = 1/mean(dif))
+appearance.df <- ddply(appearance.df, .(G,H,U,beta,pi,pop_size,s,tau), transform,
+              time.exact = 1/ (pop_size * ((U*beta)^2 * exp(-U/s - U)+2*tau*(U*beta)^2 / s *exp(-U*beta / s -tau*U))),
+              time.approx = 1/(pop_size* ((1-tau*U)*2*tau*(U*beta)^2 /s)),
+              time.mean.plus.se = time.mean + time.se,
+              time.mean.minus.se = time.mean - time.se)
+appearance.df <- melt(data=appearance.df,measure.vars=c("time.mean", "time.exact", "time.approx"))
 
+q <- ggplot(appearance.df, aes(x=tau,y=value,group=variable,color=variable,linetype=variable))+ 
+  geom_line() +
+  geom_point() + 
+  geom_errorbar()
 
 ## CALC FIXATION
 dff <- ddply(df, .(G,H,U,beta,pi,pop_size,s,tau,fname), summarize,
