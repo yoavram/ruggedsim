@@ -103,7 +103,7 @@ def run():
 			w = rugged_fitness(s, H, 3, G)
 			change_tick = tick
 
-		if p[2,:].sum() > 0 and change_tick >= 0:
+		if p[2,0] > 0 and change_tick >= 0:
 			if fixation_count == 0:
 				logger.debug("Started counting fixation at tick %d" % tick)
 				appearances.append(tick)
