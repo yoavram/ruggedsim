@@ -5,12 +5,12 @@
 #$ -N msb 
 #$ -l lilach,mem_free=1G
 
-#$ -v s=0.1
+#$ -v s=0.01
 #$ -v H=2
 #$ -v U=0.0004
 #$ -v beta=0.0002
 #$ -v pi=1
-#$ -v tau=10
+#$ -v tau=50
 #$ -v pop_size=1000000
 #$ -v G=25
 #$ -v ticks=10000
