@@ -97,21 +97,6 @@ def run():
 
 		if tick_interval != 0 and tick % tick_interval == 0:
 			logger.debug("Tick %d", tick)
-
-		if W[-1] < e ** (-(1 + beta) * U) and change_tick == -1:
-			logger.debug("Changing fitness landscape at tick %d with mean fitness %f" % (tick, W[-1]))
-			w = rugged_fitness(s, H, 3, G)
-			change_tick = tick
-
-		if p[2,0] > 0 and change_tick >= 0:
-			if fixation_count == 0:
-				logger.debug("Started counting fixation at tick %d" % tick)
-				appearances.append(tick)
-			fixation_count += 1
-		else:
-			if fixation_count > 0:
-				logger.debug("Stopped counting fixation at tick %d" % tick)
-				fixation_count = 0
 		tick += 1
 	toc = clock()
 	logger.info("Simulation finished, %d ticks, time elapsed %.3f seconds",tick, (toc - tic))

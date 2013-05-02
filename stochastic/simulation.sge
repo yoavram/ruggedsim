@@ -2,7 +2,7 @@
 #$ -V
 #$ -cwd
 #$ -j y
-#$ -N appearances 
+#$ -N msb 
 #$ -l lilach,mem_free=1G
 
 #$ -v s=0.1
@@ -11,11 +11,11 @@
 #$ -v beta=0.0002
 #$ -v pi=1
 #$ -v tau=10
-#$ -v pop_size=10000000
+#$ -v pop_size=1000000
 #$ -v G=25
-#$ -v ticks=100000000
-#$ -v tick_interval=100000
-#$ -v stats_interval=100000
+#$ -v ticks=10000
+#$ -v tick_interval=100
+#$ -v stats_interval=10
 
 module load gcc/gcc472
 module load python/python-2.7.2
