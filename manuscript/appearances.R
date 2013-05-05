@@ -3,17 +3,40 @@ library(plyr)
 library(gridExtra)
 library(reshape)
 
-ggplot2::theme_set(theme_bw())
+rho_func <- function(row) {
+  if (row[5] == '1'){
+    return(rho_sim(row))
+  }
+  if (row[5] == '10') {
+    return(rho_cm(row))
+  }
+  return(1)
+}
+
+rho_sim <- function(row) {
+  row <- as.numeric(row)
+  H <- row[2]
+  tau <- row[8]
+  U <- row[3]
+  s <- row[7]
+  return(2 * s * H + 2 * (U ^ 2) * (1 - s) * (tau - 1) / s)
+}
+
+rho_cm <- function(row) {
+  row <- as.numeric(row)
+  H <- row[2]
+  s <- row[7]
+  return(2 * s * H )
+}
 
 plot.on.tau <- function(df, title='') {
     q <- ggplot(df, aes(x=tau,y=value,group=variable,color=variable,linetype=variable))+ 
-                  geom_line() 
-                  
+                  geom_line()         
 }
 
 ## READ DATA
-df <- read.csv(file='../stochastic/appearances.csv.gz', header=T)
-df <- subset(df, pi==1 & s==0.05)
+df <- read.csv(file='../stochastic/appearances_AB0.csv.gz', header=T)
+#df <- subset(df, s==0.01)
 
 ## CALC ADAPTATION
 dff <- ddply(df, .(G,H,U,beta,pi,pop_size,s,tau, fname), summarize,
@@ -22,8 +45,7 @@ adapt.df <- ddply(dff, .(G,H,U,beta,pi,pop_size,s,tau), summarize,
              time.mean = mean(T),
              time.sd = sd(T),
              time.se = sd(T)/sqrt(length(T)))
-             
-
+qplot(x=tau, y=time.mean, data=adapt.df, ymin=time.mean-time.se, ymax=time.mean+time.se, geom=c("point","errorbar"), facets=pi~s)      
 
 ## CALC APPEARANCE
 appearance.df <- ddply(df, .(G,H,U,beta,pi,pop_size,s,tau), summarize,
@@ -51,12 +73,14 @@ fixation.df <- ddply(dff, .(G,H,U,beta,pi,pop_size,s,tau), summarize,
              time.sd = sd(N),
              time.se = sd(N)/sqrt(length(N)),
              prob.mean = 1/mean(N))
+fixation.df <- cbind(fixation.df, rho=apply(fixation.df,1,rho_func))
 
-## PLOTS
-adaptation.p <- plot.on.tau(adapt.df, 'Adaptation')
-appearance.p <- plot.on.tau(appearance.df, 'Appearance')
-fixation.p <- plot.on.tau(fixation.df, 'Fixation')
+q <- ggplot(data=subset(fixation.df,pi==1), mapping=aes(x=tau)) +
+  geom_line(mapping=aes(y=1/rho), size=1) + 
+  geom_point(mapping=aes(y=time.mean), size=2) + 
+  geom_line(mapping=aes(y=time.mean), size=0.5) + 
+  geom_errorbar(mapping=aes(ymax = time.mean + time.se, ymin=time.mean - time.se)) 
 
-
-
+q + scale_y_log10() + 
+  geom_ribbon(mapping=aes(y=time.mean, ymin = time.mean - 2*time.se, ymax = time.mean + 2*time.se),alpha=I(0.2))
 
