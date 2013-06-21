@@ -32,8 +32,8 @@ def create_parser():
 		metavar="float",
 		help="strain mutation ratio")
 	parser.add_argument( "--pi",
-		type=int,
-		metavar="int",
+		type=float,
+		metavar="float",
 		help="hypermutaion threshold in fitness")
 	parser.add_argument( "--tau",
 		type=float,
