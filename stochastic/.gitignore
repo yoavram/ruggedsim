@@ -4,3 +4,6 @@ output
 *.pyc
 fixation.o*
 appearances.o*
+pop1e*
+*.csv.gz
+*.pickle.gz
