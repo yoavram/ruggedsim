@@ -2,22 +2,22 @@
 #$ -V
 #$ -cwd
 #$ -j y
-#$ -N pop1e8
-#$ -l lilach,mem_free=1G
+#$ -N pop1e6II
+#$ -l lilach,mem_free=2G
 
-#$ -v s=0.1
+#$ -v s=0.05
 #$ -v H=2
 #$ -v U=0.0004
 #$ -v beta=0.0002
-#$ -v pi=1
+#$ -v pi=1.01
 #$ -v tau=10
-#$ -v pop_size=100000000
+#$ -v pop_size=1000000
 #$ -v G=25
 #$ -v ticks=100000000
 #$ -v tick_interval=100000
 #$ -v stats_interval=100000
 
 module load gcc/gcc472
-module load python/python-2.7.2
+module load python/python-2.6.6
 
 python simulation.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --ticks=${ticks} --pop_size=${pop_size} --tick_interval=${tick_interval} --stats_interval=${stats_interval} --G=${G} --job_name=$JOB_NAME
