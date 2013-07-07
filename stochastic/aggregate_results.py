@@ -62,12 +62,12 @@ if __name__ == '__main__':
 		sys.exit()
 
 	for i,fname in enumerate(file_list):
-	    data,W,p,apps = process_data_file(fname)
-	    all_data[i] = data
-	    if apps != None:
-	        apps_data[data['fname']] = apps
-	    all_p[data['fname']] = p
-	    all_W[data['fname']] = W
+		data,W,p,apps = process_data_file(fname)
+		all_data[i] = data
+		if apps != None:
+			apps_data[data['fname']] = apps
+		all_p[data['fname']] = p
+		all_W[data['fname']] = W
 	toc = time.clock()
 	print "Processed all files in", (toc-tic), "seconds"
 	print "all_data length:", len(all_data)
@@ -103,7 +103,10 @@ if __name__ == '__main__':
 			rec = res.copy()
 			rec['app'] = a
 			rec['dif'] = d
-			df_list.append(rec)
+			if rec['T'] == '' or rec['T'] == None:
+				print "Removed record without T"
+			else:
+				df_list.append(rec)
 	df = pd.DataFrame(data=df_list)
 	fname = 'appearances_%s.csv.gz' % jobname
 	with gzip.open(fname, 'w') as f:
