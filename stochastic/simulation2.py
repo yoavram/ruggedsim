@@ -70,7 +70,7 @@ def run():
 
 	## MSB
 
-	while tick < 500:		
+	while tick < 5000:		
 		# selection
 		p = w * p
 		
@@ -172,8 +172,8 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	fix_dict = {'p': p.tolist(), 'W': W, 't': tick, 'success': p[2,:].sum() > 0}
-
+	fix_dict = {'p': p.tolist(), 'W': W, 't': tick, 'success': bool(p[2,:].sum() > 0)}
+	
 	if fix_dict['success']:
 		logger.info("Fixation at tick %d with mean fitness %.4g and AB frequency %.4g", tick, W, p[2,:].sum())
 		AB0,AB1,AB2,AB3 = p[2,0],p[2,1],p[2,2],p[2,3]
@@ -196,9 +196,9 @@ def run():
 		'beta':beta, 
 		'pi':pi, 
 		'tau':tau, 
-		#'msb':msb_dict,
-		#'app':app_dict,
-		#'fix':fix_dict 
+		'msb':msb_dict,
+		'app':app_dict,
+		'fix':fix_dict 
 	}
 	with gzip.open(output_filename, 'w') as f:
 		json.dump(data, f, indent=4, separators=(',', ': '))
