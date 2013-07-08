@@ -50,6 +50,11 @@ logger.info("Logging to %s", log_filename)
 logger.info("Parametes from file and command line: %s", params.to_string(args_and_params, short=True))
 logger.info("Parameters saved to file %s", params_filename)
 
+def nonzero_list(arr):
+	for i in range(len(arr)):
+		if arr[i] == 0:
+			break
+	return arr[:i].tolist()
 
 def run():
 	tic = clock()
@@ -98,7 +103,7 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	msb_dict = {'p': p.tolist(), 'W': W, 't': tick}
+	msb_dict = {'p': nonzero_list(p), 'W': W, 't': tick}
 	logger.info("MSB reached at tick %d with mean fitness %.4g", tick, W)
 	w = rugged_fitness(s, H, 3, G)
 	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
@@ -135,7 +140,7 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	app_dict = {'p': p.tolist(), 'W': W, 't': tick}
+	app_dict = {'p': nonzero_list(p), 'W': W, 't': tick}
 
 	logger.info("Double mutant appeared at tick %d with mean fitness %.4g", tick, W)
 	AB0,AB1,AB2,AB3 = p[2,0],p[2,1],p[2,2],p[2,3]
@@ -172,7 +177,7 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	fix_dict = {'p': p.tolist(), 'W': W, 't': tick, 'success': bool(p[2,:].sum() > 0)}
+	fix_dict = {'p': nonzero_list(p), 'W': W, 't': tick, 'success': bool(p[2,:].sum() > 0)}
 	
 	if fix_dict['success']:
 		logger.info("Fixation at tick %d with mean fitness %.4g and AB frequency %.4g", tick, W, p[2,:].sum())
