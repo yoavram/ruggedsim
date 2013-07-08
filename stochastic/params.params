@@ -5,7 +5,7 @@
     "H": 2,
     "job_name": "ruggedsim",
     "log_ext": ".log",
-    "U": 0.003,
+    "U": 0.0004,
     "G": 25,
     "output_dir": "output",
     "data_ext": ".data",
@@ -13,9 +13,9 @@
     "params_file": "params.params",
     "pi": 0,
     "pop_size":1000000,
-    "s": 0.01,
+    "s": 0.05,
     "tau": 1,
-    "tick_interval": 1000,
+    "tick_interval": 10000,
     "ticks": 50000,
     "stats_interval": 100
 }
