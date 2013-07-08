@@ -193,7 +193,8 @@ def run():
 	# output file
 	output_filename = cat_file_path(data_ext)
 	make_path(output_filename)
-	data = {'G':G, 
+	data = { 'simulation_id':simulation_id,
+		'G':G, 
 		'pop_size':pop_size, 
 		's':s, 
 		'H':H, 
