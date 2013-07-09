@@ -1,0 +1,21 @@
+#!/bin/bash
+#$ -V
+#$ -cwd
+#$ -j y
+#$ -N pop1e6
+#$ -l lilach,mem_free=2G
+
+#$ -v s=0.05
+#$ -v H=2
+#$ -v U=0.0004
+#$ -v beta=0.0002
+#$ -v pi=1
+#$ -v tau=10
+#$ -v pop_size=1000000
+#$ -v G=25
+#$ -v tick_interval=10000
+
+module load gcc/gcc472
+module load python/python-2.7.2
+
+python simulation2.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --job_name=$JOB_NAME
