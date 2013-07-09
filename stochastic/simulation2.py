@@ -57,7 +57,10 @@ def run():
 	w = smooth_fitness(s, H, 3, G)
 	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
 	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
-	Mu = big_mutation_matrix((mutation_rates * beta).transpose(), G, small_strain_mutation_matrix)
+	mutation_rates2 = mutation_rates.copy()
+	if unloaded:
+		mutation_rates2[:,1:] = 0
+	Mu = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 
 	p = mutation_free_population(3, G)
 	shape = p.shape
@@ -102,11 +105,14 @@ def run():
 	w = rugged_fitness(s, H, 3, G)
 	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
 	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
-	Mu = big_mutation_matrix((mutation_rates * beta).transpose(), G, small_strain_mutation_matrix)
+	mutation_rates2 = mutation_rates.copy()
+	if unloaded:
+		mutation_rates2[:,1:] = 0
+	Mu = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 
 	## Double mutant appearance
 
-	while p[2,:].sum() == 0:		
+	while p[2,:].sum() == 0:
 		# selection
 		p = w * p
 		
