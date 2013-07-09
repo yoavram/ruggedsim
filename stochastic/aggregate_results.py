@@ -103,10 +103,7 @@ if __name__ == '__main__':
 			rec = res.copy()
 			rec['app'] = a
 			rec['dif'] = d
-			if rec['T'] == '' or rec['T'] == None:
-				print "Removed record without T"
-			else:
-				df_list.append(rec)
+			df_list.append(rec)
 	df = pd.DataFrame(data=df_list)
 	fname = 'appearances_%s.csv.gz' % jobname
 	with gzip.open(fname, 'w') as f:
