@@ -55,6 +55,10 @@ def create_parser():
 		type=float,
 		metavar="float",
 		help="advantage to double mutant")
+	parser.add_argument( "--unloaded",
+		action='store_true',
+		default=False,
+		help="don't let loaded classes adapt")
 	parser.add_argument( "--debug",
 		action='store_false',
 		default=True,
