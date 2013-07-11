@@ -2,8 +2,9 @@
 #$ -V
 #$ -cwd
 #$ -j y
-#$ -N pop1e6
+#$ -N unloaded
 #$ -l lilach,mem_free=2G
+#$ -q java.lilach.q
 
 #$ -v s=0.05
 #$ -v H=2
@@ -18,4 +19,4 @@
 module load gcc/gcc472
 module load python/python-2.7.2
 
-python simulation2.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --job_name=$JOB_NAME
+python simulation2.py --unloaded --s=${s} --H=${H} --U=${U} --beta=${beta} --tau=${tau} --pi=${pi} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --job_name=$JOB_NAME
