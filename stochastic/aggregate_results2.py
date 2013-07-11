@@ -16,7 +16,7 @@ if len(sys.argv) == 0:
 jobname = sys.argv[1] 
 print "job name:", jobname
 
-files = glob.glob("output/"+jobname+"/*.data")
+files = glob.glob("output2/"+jobname+"/*.data")
 print 'files:', len(files), files[0]
 
 data = []
@@ -29,6 +29,12 @@ print 'records', len(data)
 df = []
 for d in data:
     c = {}
+    c['U'] = d['U']
+    c['beta'] = d['beta']
+    c['s'] = d['s']
+    c['pop_size'] = d['pop_size']
+    c['G'] = d['G']
+    c['Hlon'] = d['H']
     c['tau'] = d['tau']
     c['pi'] = d['pi']
     c['app_time'] = d['app']['t'] - d['msb']['t']
