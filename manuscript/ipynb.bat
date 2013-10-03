@@ -1,0 +1,1 @@
+ipython notebook --pylab=inline --profile=default --ipython-dir=.
