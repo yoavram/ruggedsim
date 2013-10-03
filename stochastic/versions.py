@@ -10,11 +10,11 @@ import json
 import numpy 
 import pandas
 import scipy
-import cython
+#import cython
 
 print_underscore_version(logging)
 print_underscore_version(json)
 print_double_version(scipy)
 print_double_version(pandas)
 print_double_version(numpy)
-a = os.system("cython --version")
+#a = os.system("cython --version")
