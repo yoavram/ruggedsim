@@ -53,7 +53,9 @@ def mutation_rates_matrix(U, pi, tau, w):
 
 
 def mutation_rates_matrix_simk(U, k, tau, w):
-	return tau * U - U * (tau - 1) * w**abs(k)
+	wk = w**abs(k)
+	wk[wk>1] = 1
+	return tau * U - U * (tau - 1) * wk
 
 
 def big_mutation_matrix(mutation_rates, repeats, small_mutation_matrix_function):
@@ -67,7 +69,7 @@ def big_mutation_matrix(mutation_rates, repeats, small_mutation_matrix_function)
 
 
 def small_background_mutation_matrix(mutation_rates):
-	assert mutation_rates.shape[0] == len(mutation_rates)
+	assert mutation_rates.shape[0] == len(mutation_rates)	
 	mutation_rvs = poisson(mutation_rates)
 	m = np.diag(mutation_rvs.pmf(0))
 	for k in range(1,mutation_rates.shape[0]):
