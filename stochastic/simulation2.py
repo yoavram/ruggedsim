@@ -10,6 +10,8 @@ from numpy import e
 
 from model import *
 
+VERSION = '2.1'
+
 # utility functions
 
 def make_path(filename):
@@ -69,13 +71,13 @@ def run():
 	shape = p.shape
 	W = mean_fitness(p,w)
 
-	logger.info("Starting simulation V.2.1")
+	logger.info("Starting simulation V.%s", VERSION)
 	
 	tick = 0
 
 	## MSB
 
-	while tick < 5000:		
+	while tick < 5000:
 		# selection
 		p = w * p
 		
@@ -191,7 +193,7 @@ def run():
 
 	# wrap up 
 	toc = clock()
-	logger.info("Simulation V.2 finished, %d ticks, time elapsed %.3f seconds",tick, (toc - tic))
+	logger.info("Simulation V.%s finished, %d ticks, time elapsed %.3f seconds", VERSION, tick, (toc - tic))
 
 	# output file
 	output_filename = cat_file_path(data_ext)
