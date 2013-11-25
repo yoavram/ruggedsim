@@ -55,6 +55,9 @@ def run():
 
 	# init population
 	w = smooth_fitness(s, H, 3, G)
+	if pi < 0: 
+		# in k mode - mutation rate a continous function of fitness
+		mutation_rates_matrix = mutation_rates_matrix_simk
 	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
 	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
@@ -66,7 +69,7 @@ def run():
 	shape = p.shape
 	W = mean_fitness(p,w)
 
-	logger.info("Starting simulation V.2")
+	logger.info("Starting simulation V.2.1")
 	
 	tick = 0
 

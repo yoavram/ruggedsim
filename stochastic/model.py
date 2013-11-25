@@ -46,10 +46,14 @@ def mean_fitness(p, w):
 	return (p*w).sum()
 
 
-def mutation_rates_matrix(U, pi, tau, w):
+def mutation_rates_matrix(U, pi, tau, w):	
 	mutation_rates = np.ones(w.shape) * U
 	mutation_rates[w < pi] *= tau
 	return mutation_rates
+
+
+def mutation_rates_matrix_simk(U, k, tau, w):
+	return tau * U - U * (tau - 1) * w**abs(k)
 
 
 def big_mutation_matrix(mutation_rates, repeats, small_mutation_matrix_function):
