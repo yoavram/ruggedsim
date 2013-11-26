@@ -61,11 +61,11 @@ def run():
 	
 	# resident
 	mutation_rates = mutation_rates_matrix(U, 0, 1, w)
-	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
+	Mm1 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
 		mutation_rates2[:,1:] = 0
-	Mu = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
+	Mu1 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 
 	p1 = mutation_free_population(3, G) * 0.5
 
@@ -103,9 +103,9 @@ def run():
 		p2 = p2.reshape(shape, order="F")
 
 		# background mutations 
-		p1 = Mm.dot( p1.flatten(order="C") )
+		p1 = Mm1.dot( p1.flatten(order="C") )
 		p1 = p1.reshape(shape, order="C")
-		p2 = Mm.dot( p2.flatten(order="C") )
+		p2 = Mm2.dot( p2.flatten(order="C") )
 		p2 = p2.reshape(shape, order="C")
 
 		psum = p1.sum() + p2.sum()
@@ -158,15 +158,15 @@ def run():
 		p2 = w * p2
 		
 		# strain mutations
-		p1 = Mu.dot( p1.flatten(order="F") )
+		p1 = Mu1.dot( p1.flatten(order="F") )
 		p1 = p1.reshape(shape, order="F")
-		p2 = Mu.dot( p2.flatten(order="F") )
+		p2 = Mu2.dot( p2.flatten(order="F") )
 		p2 = p2.reshape(shape, order="F")
 
 		# background mutations 
-		p1 = Mm.dot( p1.flatten(order="C") )
+		p1 = Mm1.dot( p1.flatten(order="C") )
 		p1 = p1.reshape(shape, order="C")
-		p2 = Mm.dot( p2.flatten(order="C") )
+		p2 = Mm2.dot( p2.flatten(order="C") )
 		p2 = p2.reshape(shape, order="C")
 
 		psum = p1.sum() + p2.sum()
@@ -210,9 +210,9 @@ def run():
 		# p = p.reshape(shape, order="F")
 
 		# background mutations 
-		p1 = Mm.dot( p1.flatten(order="C") )
+		p1 = Mm1.dot( p1.flatten(order="C") )
 		p1 = p1.reshape(shape, order="C")
-		p2 = Mm.dot( p2.flatten(order="C") )
+		p2 = Mm2.dot( p2.flatten(order="C") )
 		p2 = p2.reshape(shape, order="C")
 
 		psum = p1.sum() + p2.sum()
