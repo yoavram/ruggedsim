@@ -97,9 +97,9 @@ def run():
 		p2 = w * p2
 		
 		# strain mutations
-		p1 = Mu.dot( p1.flatten(order="F") )
+		p1 = Mu1.dot( p1.flatten(order="F") )
 		p1 = p1.reshape(shape, order="F")
-		p2 = Mu.dot( p2.flatten(order="F") )
+		p2 = Mu2.dot( p2.flatten(order="F") )
 		p2 = p2.reshape(shape, order="F")
 
 		# background mutations 
