@@ -10,7 +10,7 @@ from numpy import e
 
 from model import *
 
-VERSION = '2.1'
+VERSION = '3.0'
 
 # utility functions
 
@@ -52,24 +52,42 @@ logger.info("Logging to %s", log_filename)
 logger.info("Parametes from file and command line: %s", params.to_string(args_and_params, short=True))
 logger.info("Parameters saved to file %s", params_filename)
 
+
 def run():
 	tic = clock()
 
 	# init population
 	w = smooth_fitness(s, H, 3, G)
+	
 	if pi < 0: 
 		# in k mode - mutation rate a continous function of fitness
 		mutation_rates_matrix = mutation_rates_matrix_simk
-	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
+	
+	# resident
+	mutation_rates = mutation_rates_matrix(U, 0, 1, w)
 	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
 		mutation_rates2[:,1:] = 0
 	Mu = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 
-	p = mutation_free_population(3, G)
+	p1 = mutation_free_population(3, G) * 0.5
+
+	# invader
+	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
+	Mm2 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
+	mutation_rates2 = mutation_rates.copy()
+	if unloaded:
+		mutation_rates2[:,1:] = 0
+	Mu2 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
+	
+	p2 = mutation_free_population(3, G) * 0.5
+
+	# go on...
 	shape = p.shape
-	W = mean_fitness(p,w)
+	W1 = mean_fitness(p1,w)
+	W2 = mean_fitness(p2,w)
+	W = W1 + W2
 
 	logger.info("Starting simulation V.%s", VERSION)
 	
@@ -79,25 +97,36 @@ def run():
 
 	while tick < 5000:
 		# selection
-		p = w * p
+		p1 = w * p1
+		p2 = w * p2
 		
 		# strain mutations
-		p = Mu.dot( p.flatten(order="F") )
-		p = p.reshape(shape, order="F")
+		p1 = Mu.dot( p1.flatten(order="F") )
+		p1 = p1.reshape(shape, order="F")
+		p2 = Mu.dot( p2.flatten(order="F") )
+		p2 = p2.reshape(shape, order="F")
 
 		# background mutations 
-		p = Mm.dot( p.flatten(order="C") )
-		p = p.reshape(shape, order="C")
+		p1 = Mm.dot( p1.flatten(order="C") )
+		p1 = p1.reshape(shape, order="C")
+		p2 = Mm.dot( p2.flatten(order="C") )
+		p2 = p2.reshape(shape, order="C")
 
-		p /= p.sum()
+		psum = p1.sum() + p2.sum()
+		p1 /= psum
+		p2 /= psum
 
 		# drift
 		if pop_size > 0:
-			p = np.random.multinomial(pop_size, p.flatten()) / np.float64(pop_size)
-			p = p.reshape(shape)
+			p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()) / np.float64(pop_size)
+			p1 = p1.reshape(shape)
+			p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()) / np.float64(pop_size)
+			p2 = p2.reshape(shape)
 
 		# mean fitness
-		W = mean_fitness(p,w)
+		W1 = mean_fitness(p1,w)
+		W2 = mean_fitness(p2,w)
+		W = W1 + W2
 	
 		# monitoring and logging
 
@@ -105,39 +134,60 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	msb_dict = {'p': p.tolist(), 'W': W, 't': tick}
+	msb_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick}
 	logger.info("MSB reached at tick %d with mean fitness %.4g", tick, W)
 	w = rugged_fitness(s, H, 3, G)
-	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
-	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
+
+	# resident
+	mutation_rates = mutation_rates_matrix(U, 0, 1, w)
+	Mm1 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
 		mutation_rates2[:,1:] = 0
-	Mu = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
+	Mu1 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 
+	# invader
+	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
+	Mm2 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
+	mutation_rates2 = mutation_rates.copy()
+	if unloaded:
+		mutation_rates2[:,1:] = 0
+	Mu2 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
+	
 	## Double mutant appearance
 
-	while p[2,:].sum() == 0:
+	while p1[2,:].sum() == 0 and p2[2,:].sum() == 0:
 		# selection
-		p = w * p
+		p1 = w * p1
+		p2 = w * p2
 		
 		# strain mutations
-		p = Mu.dot( p.flatten(order="F") )
-		p = p.reshape(shape, order="F")
+		p1 = Mu.dot( p1.flatten(order="F") )
+		p1 = p1.reshape(shape, order="F")
+		p2 = Mu.dot( p2.flatten(order="F") )
+		p2 = p2.reshape(shape, order="F")
 
 		# background mutations 
-		p = Mm.dot( p.flatten(order="C") )
-		p = p.reshape(shape, order="C")
+		p1 = Mm.dot( p1.flatten(order="C") )
+		p1 = p1.reshape(shape, order="C")
+		p2 = Mm.dot( p2.flatten(order="C") )
+		p2 = p2.reshape(shape, order="C")
 
-		p /= p.sum()
+		psum = p1.sum() + p2.sum()
+		p1 /= psum
+		p2 /= psum
 
 		# drift
 		if pop_size > 0:
-			p = np.random.multinomial(pop_size, p.flatten()) / np.float64(pop_size)
-			p = p.reshape(shape)
+			p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()) / np.float64(pop_size)
+			p1 = p1.reshape(shape)
+			p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()) / np.float64(pop_size)
+			p2 = p2.reshape(shape)
 
 		# mean fitness
-		W = mean_fitness(p,w)
+		W1 = mean_fitness(p1,w)
+		W2 = mean_fitness(p2,w)
+		W = W1 + W2
 	
 		# monitoring and logging
 
@@ -145,36 +195,45 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	app_dict = {'p': p.tolist(), 'W': W, 't': tick}
+	app_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick}
 
 	logger.info("Double mutant appeared at tick %d with mean fitness %.4g", tick, W)
-	AB0,AB1,AB2,AB3 = p[2,0],p[2,1],p[2,2],p[2,3]
+	AB0,AB1,AB2,AB3 = p1[2,0]+p2[2,0],p1[2,1]+p2[2,1],p1[2,2]+p2[2,2],p1[2,3]+p2[2,3]
 	logger.info("AB/0 %.4g, AB/1 %.4g, AB/2 %.4g, AB/3 %.4g", AB0, AB1, AB2, AB3)
 
 
 	## Double mutant fixation
 
-	while p[2,:].sum() > 0 and p[2,:].sum() < 1:
+	while p1[2,:].sum() > 0 and p1[2,:].sum() < 1 and p2[2,:].sum() > 0 and p2[2,:].sum() < 1 :
 		# selection
-		p = w * p
+		p1 = w * p1
+		p2 = w * p2
 		
 		# NO strain mutations
 		# p = Mu.dot( p.flatten(order="F") )
 		# p = p.reshape(shape, order="F")
 
 		# background mutations 
-		p = Mm.dot( p.flatten(order="C") )
-		p = p.reshape(shape, order="C")
+		p1 = Mm.dot( p1.flatten(order="C") )
+		p1 = p1.reshape(shape, order="C")
+		p2 = Mm.dot( p2.flatten(order="C") )
+		p2 = p2.reshape(shape, order="C")
 
-		p /= p.sum()
+		psum = p1.sum() + p2.sum()
+		p1 /= psum
+		p2 /= psum
 
 		# drift
 		if pop_size > 0:
-			p = np.random.multinomial(pop_size, p.flatten()) / np.float64(pop_size)
-			p = p.reshape(shape)
+			p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()) / np.float64(pop_size)
+			p1 = p1.reshape(shape)
+			p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()) / np.float64(pop_size)
+			p2 = p2.reshape(shape)
 
 		# mean fitness
-		W = mean_fitness(p,w)
+		W1 = mean_fitness(p1,w)
+		W2 = mean_fitness(p2,w)
+		W = W1 + W2
 	
 		# monitoring and logging
 
@@ -182,14 +241,19 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	fix_dict = {'p': p.tolist(), 'W': W, 't': tick, 'success': bool(p[2,:].sum() > 0)}
+	fix_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick, 'success': bool(p1[2,:].sum()+p2[2,:].sum() > 0), 'invasion': p2.sum() > p1.sum()}
 	
 	if fix_dict['success']:
-		logger.info("Fixation at tick %d with mean fitness %.4g and AB frequency %.4g", tick, W, p[2,:].sum())
-		AB0,AB1,AB2,AB3 = p[2,0],p[2,1],p[2,2],p[2,3]
+		logger.info("Fixation at tick %d with mean fitness %.4g and AB frequency %.4g", tick, W, p1[2,:].sum()+p2[2,:].sum())
+		AB0,AB1,AB2,AB3 = p1[2,0]+p2[2,0],p1[2,1]+p2[2,1],p1[2,2]+p2[2,2],p1[2,3]+p2[2,3]
 		logger.info("AB/0 %.4g, AB/1 %.4g, AB/2 %.4g, AB/3 %.4g", AB0, AB1, AB2, AB3)
 	else:
 		logger.info("Extinction at tick %d with mean fitness %.4g", tick, W)
+
+	if fix_dict['invasion']:
+		logger.info("Invader won at tick %d with mean fitness %.4g and invader frequency %.4g", tick, W, p2.sum())
+	else:
+		logger.info("Resident won at tick %d with mean fitness %.4g and invader frequency %.4g", tick, W, p2.sum())
 
 	# wrap up 
 	toc = clock()
