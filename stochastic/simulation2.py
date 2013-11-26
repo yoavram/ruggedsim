@@ -59,10 +59,6 @@ def run():
 	# init population
 	w = smooth_fitness(s, H, 3, G)
 	
-	if pi < 0: 
-		# in k mode - mutation rate a continous function of fitness
-		mutation_rates_matrix = mutation_rates_matrix_simk
-	
 	# resident
 	mutation_rates = mutation_rates_matrix(U, 0, 1, w)
 	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
@@ -84,7 +80,7 @@ def run():
 	p2 = mutation_free_population(3, G) * 0.5
 
 	# go on...
-	shape = p.shape
+	shape = p1.shape
 	W1 = mean_fitness(p1,w)
 	W2 = mean_fitness(p2,w)
 	W = W1 + W2
@@ -241,7 +237,7 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	fix_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick, 'success': bool(p1[2,:].sum()+p2[2,:].sum() > 0), 'invasion': p2.sum() > p1.sum()}
+	fix_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick, 'success': bool(p1[2,:].sum()+p2[2,:].sum() > 0), 'invasion': bool(p2.sum() > p1.sum())}
 	
 	if fix_dict['success']:
 		logger.info("Fixation at tick %d with mean fitness %.4g and AB frequency %.4g", tick, W, p1[2,:].sum()+p2[2,:].sum())
