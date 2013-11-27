@@ -16,7 +16,7 @@ if len(sys.argv) == 0:
 jobname = sys.argv[1] 
 print "job name:", jobname
 
-files = glob.glob("output2/"+jobname+"/*.data")
+files = glob.glob("output/"+jobname+"/*.data")
 print 'files:', len(files), files[0]
 
 data = []
