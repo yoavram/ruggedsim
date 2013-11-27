@@ -245,7 +245,7 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	fix_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick, 'success': bool(p1[2,:].sum()+p2[2,:].sum() > 0), 'invasion': bool(p2.sum() > p1.sum())}
+	fix_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick, 'success': bool(p1[2,:].sum()+p2[2,:].sum() > 0), 'invader': p2.sum()}
 	
 	if fix_dict['success']:
 		logger.info("Fixation at tick %d with mean fitness %.4g and AB frequency %.4g", tick, W, p1[2,:].sum()+p2[2,:].sum())
@@ -254,11 +254,8 @@ def run():
 	else:
 		logger.info("Extinction at tick %d with mean fitness %.4g", tick, W)
 
-	if fix_dict['invasion']:
-		logger.info("Invader won at tick %d with mean fitness %.4g and invader frequency %.4g", tick, W, p2.sum())
-	else:
-		logger.info("Resident won at tick %d with mean fitness %.4g and invader frequency %.4g", tick, W, p2.sum())
-
+	logger.info("Invader frequency %.4g", p2.sum())
+	
 	# wrap up 
 	toc = clock()
 	logger.info("Simulation V.%s finished, %d ticks, time elapsed %.3f seconds", VERSION, tick, (toc - tic))
