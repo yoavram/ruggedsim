@@ -28,11 +28,11 @@ def cat_file_path(extension):
 ## Setting up the simulation infrastructure
 
 # load parameters to global namespace
-import args, params
-args_and_params = args.args_and_params()
+import args3, params
+args_and_params = args3.args_and_params()
 globals().update(args_and_params)
 if not 'simulation_id' in args_and_params:
-	simulation_id = "pop_%d_G_%d_s_%g_H_%g_U_%g_beta_%g_pi_%g_tau_%g_" % (pop_size,G,s,H,U,beta,pi,tau)
+	simulation_id = "pop_%d_G_%d_s_%g_H_%g_U_%g_beta_%g_pi1_%g_tau1_%g_pi2_%g_tau2_%g_" % (pop_size,G,s,H,U,beta,pi1,tau1,pi2,tau2)
 	simulation_id += datetime.now().strftime('%Y-%b-%d_%H-%M-%S-%f')
 	args_and_params['simulation_id'] = simulation_id
 params_filename = cat_file_path(params_ext)
@@ -60,24 +60,24 @@ def run():
 	w = smooth_fitness(s, H, 3, G)
 	
 	# resident
-	mutation_rates = mutation_rates_matrix(U, 0, 1, w)
+	mutation_rates = mutation_rates_matrix(U, pi1, tau1, w)
 	Mm1 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
 		mutation_rates2[:,1:] = 0
 	Mu1 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 
-	p1 = mutation_free_population(3, G) * 0.5
+	p1 = mutation_free_population(3, G) 
 
 	# invader
-	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
+	mutation_rates = mutation_rates_matrix(U, pi2, tau2, w)
 	Mm2 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
 		mutation_rates2[:,1:] = 0
 	Mu2 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 	
-	p2 = mutation_free_population(3, G) * 0.5
+	p2 = mutation_free_population(3, G) 
 
 	# go on...
 	shape = p1.shape
@@ -134,25 +134,29 @@ def run():
 
 	msb_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick}
 	logger.info("MSB reached at tick %d with mean fitness %.4g", tick, W)
-	logger.info("Mixing resident and invader and changing the fitness landscape")
+	logger.info("Mixing resident and invader (%.2f) and changing the fitness landscape", invasion_rate)
 	w = rugged_fitness(s, H, 3, G)
 
 	# resident
-	mutation_rates = mutation_rates_matrix(U, 0, 1, w)
+	mutation_rates = mutation_rates_matrix(U, pi1, tau1, w)
 	Mm1 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
 		mutation_rates2[:,1:] = 0
 	Mu1 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 
+	p1 *= (1 - invasion_rate)
+
 	# invader
-	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
+	mutation_rates = mutation_rates_matrix(U, pi2, tau2, w)
 	Mm2 = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
 		mutation_rates2[:,1:] = 0
 	Mu2 = big_mutation_matrix((mutation_rates2 * beta).transpose(), G, small_strain_mutation_matrix)
 	
+	p2 *= invasion_rate
+
 	## Double mutant appearance
 
 	while p1[2,:].sum() == 0 and p2[2,:].sum() == 0:
@@ -245,7 +249,13 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	fix_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick, 'success': bool(p1[2,:].sum()+p2[2,:].sum() > 0), 'invader': p2.sum()}
+	fix_dict = {'p1': p1.tolist(), 
+				'p2': p2.tolist(), 
+				'W': W, 
+				't': tick, 
+				'success': bool(p1[2,:].sum()+p2[2,:].sum() > 0), 
+				'invader': p2.sum()
+				}
 	
 	if fix_dict['success']:
 		logger.info("Fixation at tick %d with mean fitness %.4g and AB frequency %.4g", tick, W, p1[2,:].sum()+p2[2,:].sum())
@@ -270,8 +280,10 @@ def run():
 		'H':H, 
 		'U':U, 
 		'beta':beta, 
-		'pi':pi, 
-		'tau':tau, 
+		'pi1':pi1, 
+		'tau1':tau1, 
+		'pi2':pi2, 
+		'tau2':tau2, 
 		'msb':msb_dict,
 		'app':app_dict,
 		'fix':fix_dict 
