@@ -79,9 +79,6 @@ def run():
 	
 	p2 = mutation_free_population(3, G) * 0.5
 
-	print p1
-	print p2
-
 	# go on...
 	shape = p1.shape
 	W1 = mean_fitness(p1,w)
@@ -94,7 +91,7 @@ def run():
 
 	## MSB
 
-	while tick < 1:
+	while tick < 0:
 		# selection
 		p1 = w * p1
 		p2 = w * p2
@@ -135,8 +132,6 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
-	print p1
-	print p2
 
 	msb_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick}
 	logger.info("MSB reached at tick %d with mean fitness %.4g", tick, W)
