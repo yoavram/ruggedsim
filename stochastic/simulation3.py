@@ -91,7 +91,7 @@ def run():
 
 	## MSB
 
-	while tick < 0:
+	while tick < 5000:
 		# selection
 		p1 = w * p1
 		p2 = w * p2
@@ -107,10 +107,9 @@ def run():
 		p1 = p1.reshape(shape, order="C")
 		p2 = Mm2.dot( p2.flatten(order="C") )
 		p2 = p2.reshape(shape, order="C")
-
-		psum = p1.sum() + p2.sum()
-		p1 /= psum
-		p2 /= psum
+		
+		p1 /= p1.sum()
+		p2 /= p2.sum()
 
 		# drift
 		if pop_size > 0:
@@ -135,7 +134,7 @@ def run():
 
 	msb_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick}
 	logger.info("MSB reached at tick %d with mean fitness %.4g", tick, W)
-	logger.info("Resident: %.2f, Invader: %.2f", p1.sum(), p2.sum())
+	logger.info("Mixing resident and invader and changing the fitness landscape")
 	w = rugged_fitness(s, H, 3, G)
 
 	# resident
