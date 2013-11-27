@@ -200,7 +200,7 @@ def run():
 
 	## Double mutant fixation
 
-	while p1[2,:].sum() > 0 and p1[2,:].sum() < 1 and p2[2,:].sum() > 0 and p2[2,:].sum() < 1 :
+	while (p1[2,:].sum() > 0 and p1[2,:].sum() < 1) or (p2[2,:].sum() > 0 and p2[2,:].sum() < 1):
 		# selection
 		p1 = w * p1
 		p2 = w * p2
