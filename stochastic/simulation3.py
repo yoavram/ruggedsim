@@ -79,6 +79,9 @@ def run():
 	
 	p2 = mutation_free_population(3, G) * 0.5
 
+	print p1
+	print p2
+
 	# go on...
 	shape = p1.shape
 	W1 = mean_fitness(p1,w)
@@ -91,7 +94,7 @@ def run():
 
 	## MSB
 
-	while tick < 5000:
+	while tick < 1:
 		# selection
 		p1 = w * p1
 		p2 = w * p2
@@ -114,10 +117,12 @@ def run():
 
 		# drift
 		if pop_size > 0:
-			p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()) / np.float64(pop_size)
-			p1 = p1.reshape(shape)
-			p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()) / np.float64(pop_size)
-			p2 = p2.reshape(shape)
+			if p1.sum() > 0:
+				p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()/p1.sum()) / np.float64(pop_size)
+				p1 = p1.reshape(shape)
+			if p2.sum() > 0:
+				p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()/p2.sum()) / np.float64(pop_size)
+				p2 = p2.reshape(shape)
 
 		# mean fitness
 		W1 = mean_fitness(p1,w)
@@ -130,8 +135,12 @@ def run():
 			logger.debug("Tick %d", tick)
 		tick += 1
 
+	print p1
+	print p2
+
 	msb_dict = {'p1': p1.tolist(), 'p2': p2.tolist(), 'W': W, 't': tick}
 	logger.info("MSB reached at tick %d with mean fitness %.4g", tick, W)
+	logger.info("Resident: %.2f, Invader: %.2f", p1.sum(), p2.sum())
 	w = rugged_fitness(s, H, 3, G)
 
 	# resident
@@ -175,10 +184,12 @@ def run():
 
 		# drift
 		if pop_size > 0:
-			p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()) / np.float64(pop_size)
-			p1 = p1.reshape(shape)
-			p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()) / np.float64(pop_size)
-			p2 = p2.reshape(shape)
+			if p1.sum() > 0:
+				p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()/p1.sum()) / np.float64(pop_size)
+				p1 = p1.reshape(shape)
+			if p2.sum() > 0:
+				p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()/p2.sum()) / np.float64(pop_size)
+				p2 = p2.reshape(shape)
 
 		# mean fitness
 		W1 = mean_fitness(p1,w)
@@ -197,6 +208,7 @@ def run():
 	AB0,AB1,AB2,AB3 = p1[2,0]+p2[2,0],p1[2,1]+p2[2,1],p1[2,2]+p2[2,2],p1[2,3]+p2[2,3]
 	logger.info("AB/0 %.4g, AB/1 %.4g, AB/2 %.4g, AB/3 %.4g", AB0, AB1, AB2, AB3)
 
+	logger.info("Resident: %.2f, Invader: %.2f", p1.sum(), p2.sum())
 
 	## Double mutant fixation
 
@@ -221,10 +233,12 @@ def run():
 
 		# drift
 		if pop_size > 0:
-			p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()) / np.float64(pop_size)
-			p1 = p1.reshape(shape)
-			p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()) / np.float64(pop_size)
-			p2 = p2.reshape(shape)
+			if p1.sum() > 0:
+				p1 = np.random.multinomial(int(p1.sum()*pop_size), p1.flatten()/p1.sum()) / np.float64(pop_size)
+				p1 = p1.reshape(shape)
+			if p2.sum() > 0:
+				p2 = np.random.multinomial(int(p2.sum()*pop_size), p2.flatten()/p2.sum()) / np.float64(pop_size)
+				p2 = p2.reshape(shape)
 
 		# mean fitness
 		W1 = mean_fitness(p1,w)
