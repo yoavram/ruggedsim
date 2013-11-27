@@ -1,0 +1,24 @@
+#!/bin/bash
+#$ -V
+#$ -cwd
+#$ -j y
+#$ -N compete
+#$ -l lilach,mem_free=2G
+
+#$ -v s=0.05
+#$ -v H=2
+#$ -v U=0.0004
+#$ -v beta=0.0002
+#$ -v pi1=0
+#$ -v tau1=1
+#$ -v pi2=10
+#$ -v tau2=10
+#$ -v pop_size=1000000
+#$ -v G=25
+#$ -v tick_interval=10000
+#$ -v invasion_rate=0.5
+
+module load gcc/gcc472
+module load python/python-2.7.2
+
+python simulation3.py --s=${s} --H=${H} --U=${U} --beta=${beta} --tau1=${tau1} --pi1=${pi1} --pi2=${pi2} --tau2=${tau2} --pop_size=${pop_size} --tick_interval=${tick_interval} --G=${G} --invasion_rate=${invasion_rate} --job_name=$JOB_NAME
