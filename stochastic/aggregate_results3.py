@@ -34,13 +34,15 @@ for d in data:
     c['pop_size'] = d['pop_size']
     c['G'] = d['G']
     c['H'] = d['H']
-    c['tau'] = d['tau']
-    c['pi'] = d['pi']
-    c['app_time'] = d['app']['t'] - d['msb']['t']
-    c['app_who'] = np.argmax(d['app']['p'][2])
+    c['tau1'] = d['tau1']
+    c['pi1'] = d['pi1']
+    c['tau2'] = d['tau2']
+    c['pi2'] = d['pi2']
+    c['invasion_rate'] = d['invasion_rate']
+    c['app_time'] = d['app']['t'] - d['msb']['t']    
     c['fix_time'] = d['fix']['t'] - d['app']['t']
     c['fix'] = d['fix']['success']
-    c['invasion'] = d['fix']['invasion']
+    c['invader'] = d['fix']['invader']
     df.append(c)
 df = pd.DataFrame(df)
 print 'dataframe shape:', df.shape
