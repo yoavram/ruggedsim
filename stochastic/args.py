@@ -59,6 +59,10 @@ def create_parser():
 		action='store_true',
 		default=False,
 		help="don't let loaded classes adapt")
+	parser.add_argument( "--SIMe",
+		action='store_true',
+		default=False,
+		help="change pi only after environmental change"),
 	parser.add_argument( "--debug",
 		action='store_false',
 		default=True,
