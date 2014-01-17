@@ -10,7 +10,7 @@ from numpy import e
 
 from model import *
 
-VERSION = '2.1'
+VERSION = '2.2'
 
 # utility functions
 
@@ -57,7 +57,11 @@ def run():
 
 	# init population
 	w = smooth_fitness(s, H, 3, G)	
-	mutation_rates = mutation_rates_matrix(U, pi, tau, w)
+	if SIMe:
+		logger.info("SIMe mode - using pi=0 and tau=1 until MSB is reached")
+		mutation_rates = mutation_rates_matrix(U, 0, 1, w)
+	else:
+		mutation_rates = mutation_rates_matrix(U, pi, tau, w)
 	Mm = big_mutation_matrix(mutation_rates, 3, small_background_mutation_matrix)
 	mutation_rates2 = mutation_rates.copy()
 	if unloaded:
