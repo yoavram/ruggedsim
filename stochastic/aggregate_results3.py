@@ -10,8 +10,8 @@ import re
 import numpy as np
 
 if len(sys.argv) == 0:
-	print "Please give a jobname!"
-	sys.exit()
+    print "Please give a jobname!"
+    sys.exit()
 jobname = sys.argv[1] 
 print "job name:", jobname
 
@@ -38,7 +38,7 @@ for d in data:
     c['pi1'] = d['pi1']
     c['tau2'] = d['tau2']
     c['pi2'] = d['pi2']
-    c['invasion_rate'] = d['invasion_rate']
+    c['invasion_rate'] = d.get('invasion_rate', 0.5)
     c['app_time'] = d['app']['t'] - d['msb']['t']    
     c['fix_time'] = d['fix']['t'] - d['app']['t']
     c['fix'] = d['fix']['success']
