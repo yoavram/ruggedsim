@@ -34,19 +34,38 @@ for d in data:
     c['pop_size'] = d['pop_size']
     c['G'] = d['G']
     c['H'] = d['H']
-    c['tau1'] = d['tau1']
-    c['pi1'] = d['pi1']
-    c['tau2'] = d['tau2']
-    c['pi2'] = d['pi2']
-    c['invasion_rate'] = d.get('invasion_rate', 0.5)
+    c['tau'] = d['tau']
+    c['pi'] = d['pi']    
+
+    c['msb_W'] = d['msb']['W']
+
     c['app_time'] = d['app']['t'] - d['msb']['t']    
+    c['app_W'] = d['app']['W']
+    c['app_AB0'] = d['app']['p'][2][0]
+    c['app_AB1'] = d['app']['p'][2][1]
+    c['app_AB2'] = d['app']['p'][2][2]
+    c['app_AB3'] = d['app']['p'][2][3]
+    c['app_AB4'] = d['app']['p'][2][4]
+    c['app_best'] = np.array(d['app']['p'][2]).nonzero()[0].min()
+
     c['fix_time'] = d['fix']['t'] - d['app']['t']
     c['fix'] = d['fix']['success']
-    c['invader'] = d['fix']['invader']
+    c['fix_W'] = d['fix']['W']
+    c['fix_AB0'] = d['fix']['p'][2][0]
+    c['fix_AB1'] = d['fix']['p'][2][1]
+    c['fix_AB2'] = d['fix']['p'][2][2]
+    c['fix_AB3'] = d['fix']['p'][2][3]
+    c['fix_AB4'] = d['fix']['p'][2][4]
+    if c['fix']:
+        c['fix_best'] = np.array(d['fix']['p'][2]).nonzero()[0].min()
+    else:
+        c['fix_best'] = None
+
     df.append(c)
 df = pd.DataFrame(df)
 print 'dataframe shape:', df.shape
 
-with gzip.open("df_%s.csv.gz" % jobname, 'wb') as f:
+fname = 'df_fix_%s.csv.gz' % jobname
+with gzip.open(fname, 'wb') as f:
 	df.to_csv(f)
-print "DataFrame written to df_%s.csv.gz" % jobname
+print "DataFrame written to", fname
