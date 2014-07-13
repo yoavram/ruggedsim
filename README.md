@@ -1,4 +1,4 @@
-# Stress-Induced Mutagenesis Breaks the Trade-Off Between Adaptability and Adaptedness
+# Stress-Induced Mutagenesis and Complex Adaptation
 ## Yoav Ram and Lilach Hadany
 
 This repository is the continuation of the work started for the [SIDEER2013] symposium and extends that work from a presentation to a manuscript.
