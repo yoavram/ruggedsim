@@ -1,1 +1,0 @@
-pandoc -s -S model.md --bibliography model.bib -o model.pdf
