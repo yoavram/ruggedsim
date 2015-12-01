@@ -11,10 +11,13 @@ Ram, Y. and Hadany, L. 2014. Stress-induced mutagenesis anc complex adaptation. 
 
 Ram Y., Hadany L. (2014) Data from: Stress-induced mutagenesis and complex adaptation. Dryad Digital Repository. DOI: [10.5061/dryad.3066j](http://dx.doi.org/10.5061/dryad.3066j).
 
+## Figure reproduction
+
+Figures were produced using Python with numpy, scipy, matplotlib, pandas, scikits-bootstrap, statsmodels, and mpltools packages. The code is available as an [IPython (Jupyter) notebook](https://github.com/yoavram/ruggedsim/blob/master/manuscript/supplementry.ipynb). The notebook includes the analytic approximations as Python functions and uses the simulation raw data which is necessary for Figures 2, 3, S1, S2, and F1.
+
 ### License
 
-The content of this repository is under copyright to the authors.
-However, the authors are happy to release portions of the content under a permissive license upon request and may do so within the context of this reposityory in the future.
+All code in this repo is under the CC-BY-SA licence.
 
 The data used for the publication is deposited at [dryad](http://dx.doi.org/10.5061/dryad.3066j) under a CC0 license.
 
