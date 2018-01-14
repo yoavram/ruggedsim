@@ -1,0 +1,14 @@
+channels:
+- conda-forge
+dependencies:
+- python=2.7
+- matplotlib=1.2.1
+- numpy=1.7.1
+- pandas=0.10.1
+- scipy=0.12.0
+- statsmodels=0.4.3
+- pip:
+  - colorbrewer==0.1.1
+  - configobj==4.7.2
+  - mpltools==0.1
+  - scikits.bootstrap==0.3.1
