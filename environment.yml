@@ -10,5 +10,5 @@ dependencies:
 - pip:
   - colorbrewer==0.1.1
   - configobj==4.7.2
-  - mpltools==0.1
+  - mpltools==0.2
   - scikits.bootstrap==0.3.1
